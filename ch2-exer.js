@@ -57,12 +57,6 @@ given width and height.
 
 
 
-
-
-
-
-
-
 /* PROBLEM 1 --------------------------------------
 
 var triangle = [];

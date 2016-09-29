@@ -97,4 +97,33 @@ console.log(isOdd(-1)); //true
 
 /* PROBLEM 3 -----------------------------------------------------------
 
+function countBs(arg) {
+    var bCount = 0;
+    for (var i = 0; i < arg.length; i++) {
+        if (arg.charAt(i) === 'B') {
+            bCount += 1;
+        }
+    }
+    return bCount;
+}
+
+console.log(countBs('BUBBLES')); // 3
+console.log(countBs('HOBBIES'); // 2
+console.log(countBs('Babies'); // 1
+
+
+function countChar(inputString, inputChar) {
+    var charCount = 0;
+    for (var i = 0; i < inputString.length; i++) {
+        if (inputString.charAt(i) === inputChar) {
+            charCount += 1;
+        }
+    }
+    return charCount;
+}
+
+console.log(countChar('poop', 'i')); // 0
+console.log(countChar('oxygen','e') // 1
+console.log(countChar('oxalyl chloride','o') //2
+
 */
