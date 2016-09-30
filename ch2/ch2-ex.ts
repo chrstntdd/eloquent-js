@@ -4,7 +4,7 @@
     triangle.push('#');
     console.log(triangle.toString());
   }
-  
+
 
 //PROBLEM 2
   for (let i:number=1; i<100; i++){
@@ -16,8 +16,8 @@
       console.log(i);
     }
   }
-  
-  
+
+
   for (let i:number=1; i<100; i++){
     if (i % 5 == 0 && i % 3 == 0){
       console.log('FizzBuzz');
@@ -31,13 +31,13 @@
   }
 
 //PROBLEM 3
-  
+
   (function chessBoard(){
     console.log('# # # # \n  # # # # \n # # # # \n  # # # # \n # # # # \n  # # # # \n # # # # \n  # # # #');
   }());
-  
+
   //Obviously a useless 'program' but it satisfies the output c:
-  
+
   (function flexChessBoard(){
     let size: number = 8;
     let grid: string = '';
