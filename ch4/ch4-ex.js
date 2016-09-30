@@ -1,4 +1,4 @@
-//PROBLEM 1
+//PROBLEM 1///////////////////////////////////////////////////////////
 function range(start, end) {
     var returnArray = [];
     for (var i = start; i < end + 1; i++) {
@@ -33,4 +33,25 @@ function refinedRange(start, end, increment) {
     return returnArray;
 }
 console.log(refinedRange(5, 2, -1)); //5,4,3,2
+//PROBLEM 2///////////////////////////////////////////////////////////
+function reverseArray(arg) {
+    var backwardsArray = [];
+    for (var i = arg.length; i > 0; i--) {
+        backwardsArray.push(arg[i - 1]);
+    }
+    return backwardsArray;
+}
+console.log(reverseArray(["A", "B", "C"]));
+// → ["C", "B", "A"];
+function reverseArrayInPlace(arg) {
+    var inputArrLength = arg.length;
+    for (var i = inputArrLength; i > 0; i--) {
+        arg.push(arg[i - 1]);
+    }
+    arg.splice(0, inputArrLength);
+}
+var arrayValue = [1, 2, 3, 4, 5];
+reverseArrayInPlace(arrayValue);
+console.log(arrayValue);
+// → [5, 4, 3, 2, 1]
 //# sourceMappingURL=ch4-ex.js.map

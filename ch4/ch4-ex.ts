@@ -1,4 +1,4 @@
-//PROBLEM 1
+//PROBLEM 1///////////////////////////////////////////////////////////
     function range (start: number,end: number) {
 
         let returnArray: number[]= [];
@@ -39,4 +39,29 @@
         }
 
     console.log(refinedRange(5, 2, -1)); //5,4,3,2
-    
+
+//PROBLEM 2///////////////////////////////////////////////////////////
+
+function reverseArray (arg: any[]) {
+  let backwardsArray: any[] = [];
+  for (let i: number = arg.length; i > 0; i--) {
+    backwardsArray.push(arg[i-1]);
+  }
+  return backwardsArray;
+}
+console.log(reverseArray(["A", "B", "C"]));
+// → ["C", "B", "A"];
+
+
+function reverseArrayInPlace(arg: any[]) {
+  let inputArrLength: number = arg.length;
+  for (let i: number = inputArrLength; i > 0; i--) {
+    arg.push(arg[i - 1]);
+  }
+  arg.splice(0, inputArrLength);
+}
+
+let arrayValue = [1,2,3,4,5];
+reverseArrayInPlace(arrayValue);
+console.log(arrayValue);
+// → [5, 4, 3, 2, 1]
