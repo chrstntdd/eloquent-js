@@ -1,5 +1,5 @@
 //PROBLEM 1
-  let triangle = [];
+  let triangle: any[] = [];
   for (let i = 0; i < 7; i++){
     triangle.push('#');
     console.log(triangle.toString());

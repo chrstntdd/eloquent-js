@@ -64,4 +64,3 @@ function countChar(inputString, inputChar) {
 console.log(countChar('poop', 'i')); // 0
 console.log(countChar('oxygen', 'e')); //1
 console.log(countChar('oxalyl chloride', 'o')); //2
-//# sourceMappingURL=ch3-ex.js.map

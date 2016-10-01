@@ -14,7 +14,7 @@ console.log(findMin(1,27)) //3
 
 //PROBLEM 2 ////////////////////////////////////////////////////////
 
-function isEven(num: number) {
+function isEven(num: number): boolean {
     if (Math.abs(num) === 0) {
         return true;
     }
@@ -48,7 +48,7 @@ console.log(isOdd(-1)); //true
 
 //PROBLEM 3 ////////////////////////////////////////////////////////
 
-function countBs(arg) {
+function countBs(arg:string) {
     let bCount: number = 0;
     for (let i: number = 0; i < arg.length; i++) {
         if (arg.charAt(i) === 'B') {

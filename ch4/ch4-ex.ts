@@ -70,7 +70,7 @@
 //PROBLEM 3///////////////////////////////////////////////////////////
 function arrayToList(inputArr: number[]) {
 
-  let list = null;
+  let list:any = null;
 
   for (let i: number = inputArr.length; i >= 0; i--){
     list = { value: inputArr[i], rest: list }
@@ -79,6 +79,7 @@ function arrayToList(inputArr: number[]) {
 }
 
 console.log(arrayToList([10, 20]));
+// → {value: 10, rest: {value: 20, rest: null}}
 
 function listToArray(inputList: any) {
     let outputArr: number[] = [];
@@ -91,11 +92,18 @@ function listToArray(inputList: any) {
     return outputArr;
 }
 console.log(listToArray(arrayToList([10, 20, 30])));
+// → [10, 20, 30]
 
-function prepend(element, list){
-  //return new list and adds the element to the front of the input list
+function prepend(element: any, list: any){
+    let returnElem = {
+      value: element,
+      rest: list
+    };
+    return returnElem;
 }
+console.log(prepend(10, prepend(20, null)));
+// → {value: 10, rest: {value: 20, rest: null}}
 
-function nth(list, num){
-  //returns the
+function nth(list: any, num: number){
+  //returns
 }

@@ -63,6 +63,7 @@ function arrayToList(inputArr) {
     return list;
 }
 console.log(arrayToList([10, 20]));
+// → {value: 10, rest: {value: 20, rest: null}}
 function listToArray(inputList) {
     var outputArr = [];
     for (var node = inputList; node; node = node.rest) {
@@ -74,10 +75,16 @@ function listToArray(inputList) {
     return outputArr;
 }
 console.log(listToArray(arrayToList([10, 20, 30])));
+// → [10, 20, 30]
 function prepend(element, list) {
-    //return new list and adds the element to the front of the input list
+    var returnElem = {
+        value: element,
+        rest: list
+    };
+    return returnElem;
 }
+console.log(prepend(10, prepend(20, null)));
+// → {value: 10, rest: {value: 20, rest: null}}
 function nth(list, num) {
-    //returns the
+    //returns
 }
-//# sourceMappingURL=ch4-ex.js.map

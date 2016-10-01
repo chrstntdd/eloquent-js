@@ -50,4 +50,3 @@ for (var i = 1; i < 100; i++) {
     }
     console.log(grid);
 }());
-//# sourceMappingURL=ch2-ex.js.map
