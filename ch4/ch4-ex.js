@@ -54,4 +54,30 @@ var arrayValue = [1, 2, 3, 4, 5];
 reverseArrayInPlace(arrayValue);
 console.log(arrayValue);
 // → [5, 4, 3, 2, 1]
+//PROBLEM 3///////////////////////////////////////////////////////////
+function arrayToList(inputArr) {
+    var list = null;
+    for (var i = inputArr.length; i >= 0; i--) {
+        list = { value: inputArr[i], rest: list };
+    }
+    return list;
+}
+console.log(arrayToList([10, 20]));
+function listToArray(inputList) {
+    var outputArr = [];
+    for (var node = inputList; node; node = node.rest) {
+        if (node.value == undefined) {
+            return outputArr;
+        }
+        outputArr.push(node.value);
+    }
+    return outputArr;
+}
+console.log(listToArray(arrayToList([10, 20, 30])));
+function prepend(element, list) {
+    //return new list and adds the element to the front of the input list
+}
+function nth(list, num) {
+    //returns the
+}
 //# sourceMappingURL=ch4-ex.js.map

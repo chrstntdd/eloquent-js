@@ -42,26 +42,60 @@
 
 //PROBLEM 2///////////////////////////////////////////////////////////
 
-function reverseArray (arg: any[]) {
-  let backwardsArray: any[] = [];
-  for (let i: number = arg.length; i > 0; i--) {
-    backwardsArray.push(arg[i-1]);
+  function reverseArray (arg: any[]) {
+    let backwardsArray: any[] = [];
+    for (let i: number = arg.length; i > 0; i--) {
+      backwardsArray.push(arg[i-1]);
+    }
+    return backwardsArray;
   }
-  return backwardsArray;
-}
-console.log(reverseArray(["A", "B", "C"]));
-// → ["C", "B", "A"];
+  console.log(reverseArray(["A", "B", "C"]));
+  // → ["C", "B", "A"];
 
 
-function reverseArrayInPlace(arg: any[]) {
-  let inputArrLength: number = arg.length;
-  for (let i: number = inputArrLength; i > 0; i--) {
-    arg.push(arg[i - 1]);
+  function reverseArrayInPlace(arg: any[]) {
+    let inputArrLength: number = arg.length;
+    for (let i: number = inputArrLength; i > 0; i--) {
+      arg.push(arg[i - 1]);
+    }
+    arg.splice(0, inputArrLength);
   }
-  arg.splice(0, inputArrLength);
+
+  let arrayValue = [1,2,3,4,5];
+  reverseArrayInPlace(arrayValue);
+  console.log(arrayValue);
+  // → [5, 4, 3, 2, 1]
+
+
+//PROBLEM 3///////////////////////////////////////////////////////////
+function arrayToList(inputArr: number[]) {
+
+  let list = null;
+
+  for (let i: number = inputArr.length; i >= 0; i--){
+    list = { value: inputArr[i], rest: list }
+  }
+  return list;
 }
 
-let arrayValue = [1,2,3,4,5];
-reverseArrayInPlace(arrayValue);
-console.log(arrayValue);
-// → [5, 4, 3, 2, 1]
+console.log(arrayToList([10, 20]));
+
+function listToArray(inputList: any) {
+    let outputArr: number[] = [];
+    for (let node = inputList; node; node = node.rest) {
+        if (node.value == undefined) {
+            return outputArr;
+        }
+        outputArr.push(node.value);
+    }
+    return outputArr;
+}
+console.log(listToArray(arrayToList([10, 20, 30])));
+
+function prepend(element, list){
+  //return new list and adds the element to the front of the input list
+}
+
+function nth(list, num){
+  //returns the
+}
