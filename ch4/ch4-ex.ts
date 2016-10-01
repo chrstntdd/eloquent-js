@@ -104,6 +104,17 @@ function prepend(element: any, list: any){
 console.log(prepend(10, prepend(20, null)));
 // → {value: 10, rest: {value: 20, rest: null}}
 
-function nth(list: any, num: number){
-  //returns
+function nthRecursive(list: any, num: number): number {
+    if (!list) {
+        return undefined;
+    } else if (num === 0) {
+        return list.value;
+    } else {
+        return nthRecursive(list.rest, num - 1);
+    }
 }
+
+console.log(nthRecursive(arrayToList([10, 20, 30]), 1));
+// → 20
+
+//PROBLEM 4///////////////////////////////////////////////////////////
