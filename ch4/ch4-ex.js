@@ -99,3 +99,35 @@ function nthRecursive(list, num) {
 console.log(nthRecursive(arrayToList([10, 20, 30]), 1));
 // → 20
 //PROBLEM 4///////////////////////////////////////////////////////////
+function deepEqual(val1, val2) {
+    var propsInVal1 = 0;
+    var propsInVal2 = 0;
+    var prop;
+    if (val1 === val2) {
+        return true; //for general use cases.
+    }
+    if (val1 !== null || typeof val1 === "object" ||
+        val2 !== null || typeof val2 === "object") {
+        //perform deep comparison with two objects.
+        for (prop in val1) {
+            propsInVal1 += 1;
+        }
+        for (prop in val2) {
+            propsInVal2 += 1;
+            if (!(prop in val1) || !deepEqual(val1[prop], val2[prop])) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return propsInVal1 === propsInVal2;
+}
+var obj = { here: { is: "an" }, object: 2 };
+console.log(deepEqual(obj, obj));
+// → true
+console.log(deepEqual(obj, { here: 1, object: 2 }));
+// → false
+console.log(deepEqual(obj, { here: { is: "an" }, object: 2 }));
+// → true
