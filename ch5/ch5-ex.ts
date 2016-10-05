@@ -12,21 +12,30 @@ console.log(flattenArray([[1, 2, 3], [4, 5], [6]]));
 import {ANCESTRY_FILE} from './ancestry';
 let ancestry = JSON.parse(ANCESTRY_FILE);
 
-function average(array: number[]): number {
+function average(array: any): number {
   function plus(a: number, b: number) { return a + b; }
   return array.reduce(plus) / array.length;
 }
 
+// builds up a new object byName that associates names with people.
 let byName = {};
-ancestry.forEach(function(person:any) {
+ancestry.forEach((person:any) => {
   byName[person.name] = person;
 });
 
+/*
+1. filters byName object to remove entries where person.mother == null.
+2. maps each entry in byName object to to subtract when the person was born from when their mother was born.
+3. average() function is called on the newly mapped array to average all the numbers.
+*/
 
-function motherChildAgeDifference(input: any[]){
-
+function avgMotherChildAgeDiff(inputArr: number[]): number {
+  return average(ancestry.filter((person: any) => { return byName[person.mother] !== null })
+                         .map((person: any) => { return person.born - byName[person.mother].born })
+  );
 }
 
-
-
+console.log(byName);
+// → Object
+console.log(avgMotherChildAgeDiff(ancestry));
 // → 31.2
