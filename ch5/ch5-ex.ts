@@ -39,3 +39,15 @@ console.log(byName);
 // → Object
 console.log(avgMotherChildAgeDiff(ancestry));
 // → 31.2
+
+
+
+
+//PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
+
+//assigns century property to each person in the array of objects.
+ancestry.forEach((person: any) => {
+  person.century = Math.ceil(person.died / 100);
+});
+
+console.log(ancestry);
