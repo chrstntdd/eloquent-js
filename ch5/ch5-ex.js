@@ -36,4 +36,24 @@ console.log(avgMotherChildAgeDiff(ancestry));
 ancestry.forEach(function (person) {
     person.century = Math.ceil(person.died / 100);
 });
+var data = {
+    16: [],
+    17: [],
+    18: [],
+    19: [],
+    20: [],
+    21: []
+};
+//pushes person's age to array in data object
+ancestry.forEach(function (person) {
+    for (var i = 16; i <= 21; i++) {
+        if (person.century === i) {
+            data[i].push(person.died - person.born);
+        }
+    }
+});
+//TODO: call average function on each property's array of ages.
 console.log(ancestry);
+// → Array[39] with added century property.
+console.log(data);
+// → data object with ages pushed to the arrys within each property.
