@@ -17,27 +17,19 @@ function average(array: any): number {
   return array.reduce(plus) / array.length;
 }
 
-// builds up a new object byName that associates names with people.
-let byName = {};
+let byName: any = {};
 ancestry.forEach((person:any) => {
   byName[person.name] = person;
 });
 
-/*
-1. filters byName object to remove entries where person.mother == null.
-2. maps each entry in byName object to to subtract when the person was born from when their mother was born.
-3. average() function is called on the newly mapped array to average all the numbers.
-*/
+//filter function is called for each person to test if each person has a mother.
+let hasKnownMother = (person: any) => person.mother in byName; 
 
-function avgMotherChildAgeDiff(inputArr: number[]): number {
-  return average(ancestry.filter((person: any) => { return byName[person.mother] !== null })
-                         .map((person: any) => { return person.born - byName[person.mother].born })
-  );
+function getMotherChildAgeDiff (person:any): number {
+  return person.born - byName[person.mother].born
 }
 
-console.log(byName);
-// → Object
-console.log(avgMotherChildAgeDiff(ancestry));
+console.log(average(ancestry.filter(hasKnownMother).map(getMotherChildAgeDiff)));
 // → 31.2
 
 
