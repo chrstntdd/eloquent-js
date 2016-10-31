@@ -67,3 +67,32 @@ console.log(data);
 for (let century in data) {
   console.log(century + ": " + average(data[century]).toFixed(1));
 }
+
+//PROBLEM 4 /////////////////////////////////////////////////////////////////////////////
+
+function every(input: any[], test: any) {
+  for (var i: number = 0; i < input.length; i++) {
+    if (!test(input[i])){
+      return false;
+    }
+  }
+  return true;
+}
+
+function some(input: any[], test: any) {
+  for (let j: number = 0; j < input.length; j++){
+    if (test(input[j])){
+      return true;
+    }      
+  }
+  return false;
+}
+
+console.log(every([NaN, NaN, NaN], isNaN));
+// → true
+console.log(every([NaN, NaN, 4], isNaN));
+// → false
+console.log(some([NaN, 3, 4], isNaN));
+// → true
+console.log(some([2, 3, 4], isNaN));
+// → false
