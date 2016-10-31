@@ -33,11 +33,9 @@ console.log(average(ancestry.filter(hasKnownMother).map(getMotherChildAgeDiff)))
 // → 31.2
 
 
-
-
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
 
-//assigns century property to each person in the array of objects.
+//assigns century key to each person in the array of objects with value.
 ancestry.forEach((person: any) => {
   person.century = Math.ceil(person.died / 100);
 });
@@ -60,9 +58,12 @@ ancestry.forEach((person: any) => {
     }
 });
 
-//TODO: call average function on each property's array of ages.
 
-console.log(ancestry);
-// → Array[39] with added century property.
 console.log(data);
 // → data object with ages pushed to the arrys within each property.
+
+//Applies average method on each century value.
+//ANSWER
+for (let century in data) {
+  console.log(century + ": " + average(data[century]).toFixed(1));
+}
