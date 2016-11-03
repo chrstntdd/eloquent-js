@@ -1,39 +1,61 @@
 //PROBLEM 1 /////////////////////////////////////////////////////////////////////////////
-/*
-function Vector (x: number,y: number){
-    this.x = x;
-    this.y = y;
-}
-
-Vector.prototype.plus = function (alt: any){
-    return new Vector(this.x + alt.x, this.y + alt.y);
-}
-
-Vector.prototype.minus = function(alt: any){
-    return new Vector(this.x - alt.x, this.y - alt.y);
-}
-
-Object.defineProperty(Vector.prototype, 'length', {
-    get: function(){return Math.sqrt((this.x * this.x) + (this.y * this.y))}
-});
-
-console.log(new Vector(1,2).plus(new Vector(2,3)));
+var Vector = (function () {
+    function Vector(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    Vector.prototype.plus = function (alt) {
+        return new Vector(this.x + alt.x, this.y + alt.y);
+    };
+    Vector.prototype.minus = function (alt) {
+        return new Vector(this.x - alt.x, this.y - alt.y);
+    };
+    Object.defineProperty(Vector.prototype, "length", {
+        get: function () {
+            return Math.sqrt((this.x * this.x) + (this.y * this.y));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Vector;
+}());
+//console.log(new Vector(1, 2).plus(new Vector(2, 3)));
 // → Vector{x: 3, y: 5}
-console.log(new Vector(1,2).minus(new Vector(2,3)));
+//console.log(new Vector(1, 2).minus(new Vector(2, 3)));
 // → Vector{x: -1, y: -1}
-console.log(new Vector(3,4).length);
+//console.log(new Vector(3, 4).length);
 // → 5
-*/
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
 //from textbook
-function TextCell(text) {
-    this.text = text.split("\n");
+var TextCell = (function () {
+    function TextCell(text) {
+        this.text = text;
+    }
+    return TextCell;
+}());
+function repeat(string, times) {
+    var result = "";
+    for (var i = 0; i < times; i++)
+        result += string;
+    return result;
 }
-function StretchCell(inner, width, height) {
-    this.inner = inner;
-    this.width = width;
-    this.height = height;
-}
+var StretchCell = (function () {
+    function StretchCell(inner, height, width) {
+        this.inner = inner;
+        this.height = height;
+        this.width = width;
+    }
+    StretchCell.prototype.minWidth = function () {
+        return Math.max(this.width, this.inner.minWidth());
+    };
+    StretchCell.prototype.minHeight = function () {
+        return Math.max(this.height, this.inner.minHeight());
+    };
+    StretchCell.prototype.draw = function () {
+        return this.inner.draw(this.width, this.height);
+    };
+    return StretchCell;
+}());
 var sc = new StretchCell(new TextCell("abc"), 1, 2);
 console.log(sc.minWidth());
 // → 3
