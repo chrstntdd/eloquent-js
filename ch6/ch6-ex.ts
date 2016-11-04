@@ -28,7 +28,7 @@ class Vector {
 
 //from textbook
 function repeat(string: string, times: number): string {
-    var result = "";
+    var result = '';
     for (var i = 0; i < times; i++)
         result += string;
     return result;
@@ -48,43 +48,42 @@ class TextCell {
     draw(width: number, height: number) : any[]{
         var result: any[] = [];
         for (var i = 0; i < height; i++) {
-            var line = this.text[i] || "";
-            result.push(line + repeat(" ", width - line.length));
+            var line = this.text[i] || '';
+            result.push(line + repeat(' ', width - line.length));
         }
         return result;
     }
 }
 
-class StretchCell {
-    inner: any;
-    width: number;
+class StretchCell extends TextCell {
+    width:  number;
     height: number;
-    constructor(inner: any, width: number, height: number) {
-        this.inner = inner;
-        this.width = width;
+    constructor(text: any, width: number, height: number) {
+        super(text);
+        this.width  = width;
         this.height = height;
     }
 
     minWidth(): number {
-        return Math.max(this.width, this.inner.minWidth());
+        return super.minWidth();
     }
     minHeight(): number {
-        return Math.max(this.height, this.inner.minHeight());
+        return super.minHeight();
     }
     draw(width: number, height: number): any[] {
-        return this.inner.draw(this.width, this.height);
+        return super.draw(width, height);
     }
 }
 
 
-var sc = new StretchCell(new TextCell("abc"), 1, 2);
+var sc = new StretchCell(new TextCell('abc'), 1, 2);
 
 console.log(sc.minWidth());
 // → 3
 console.log(sc.minHeight());
 // → 2
 console.log(sc.draw(3, 2));
-// → ["abc", "   "]
+// → ['abc', '   ']
 
 
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 //PROBLEM 1 /////////////////////////////////////////////////////////////////////////////
 var Vector = (function () {
     function Vector(x, y) {
@@ -28,7 +33,7 @@ var Vector = (function () {
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
 //from textbook
 function repeat(string, times) {
-    var result = "";
+    var result = '';
     for (var i = 0; i < times; i++)
         result += string;
     return result;
@@ -46,37 +51,38 @@ var TextCell = (function () {
     TextCell.prototype.draw = function (width, height) {
         var result = [];
         for (var i = 0; i < height; i++) {
-            var line = this.text[i] || "";
-            result.push(line + repeat(" ", width - line.length));
+            var line = this.text[i] || '';
+            result.push(line + repeat(' ', width - line.length));
         }
         return result;
     };
     return TextCell;
 }());
-var StretchCell = (function () {
-    function StretchCell(inner, width, height) {
-        this.inner = inner;
+var StretchCell = (function (_super) {
+    __extends(StretchCell, _super);
+    function StretchCell(text, width, height) {
+        _super.call(this, text);
         this.width = width;
         this.height = height;
     }
     StretchCell.prototype.minWidth = function () {
-        return Math.max(this.width, this.inner.minWidth());
+        return _super.prototype.minWidth.call(this);
     };
     StretchCell.prototype.minHeight = function () {
-        return Math.max(this.height, this.inner.minHeight());
+        return _super.prototype.minHeight.call(this);
     };
     StretchCell.prototype.draw = function (width, height) {
-        return this.inner.draw(this.width, this.height);
+        return _super.prototype.draw.call(this, width, height);
     };
     return StretchCell;
-}());
-var sc = new StretchCell(new TextCell("abc"), 1, 2);
+}(TextCell));
+var sc = new StretchCell(new TextCell('abc'), 1, 2);
 console.log(sc.minWidth());
 // → 3
 console.log(sc.minHeight());
 // → 2
 console.log(sc.draw(3, 2));
-// → ["abc", "   "]
+// → ['abc', '   ']
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
 /*
 logFive(new ArraySeq([1, 2]));
