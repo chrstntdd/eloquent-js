@@ -27,36 +27,51 @@ class Vector {
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
 
 //from textbook
-class TextCell {
-    text: string;
-    constructor(text: string) {
-        this.text = text;
-    }
-}
-
-function repeat(string: string, times: number) {
+function repeat(string: string, times: number): string {
     var result = "";
     for (var i = 0; i < times; i++)
         result += string;
     return result;
 }
 
+class TextCell {
+    text: any;
+    constructor(text: any) {
+        this.text = text.split('');
+    }
+    minWidth(): number {
+        return this.text.reduce((width: number, line: any) => Math.max(width, line.length), 0);
+    }
+    minHeight(): number {
+        return this.text.length;
+    }
+    draw(width: number, height: number) : any[]{
+        var result: any[] = [];
+        for (var i = 0; i < height; i++) {
+            var line = this.text[i] || "";
+            result.push(line + repeat(" ", width - line.length));
+        }
+        return result;
+    }
+}
+
 class StretchCell {
     inner: any;
-    height: number;
     width: number;
-    constructor(inner: any, height: number, width: number) {
+    height: number;
+    constructor(inner: any, width: number, height: number) {
         this.inner = inner;
-        this.height = height;
         this.width = width;
+        this.height = height;
     }
-    minWidth() {
+
+    minWidth(): number {
         return Math.max(this.width, this.inner.minWidth());
     }
-    minHeight() {
+    minHeight(): number {
         return Math.max(this.height, this.inner.minHeight());
     }
-    draw() {
+    draw(width: number, height: number): any[] {
         return this.inner.draw(this.width, this.height);
     }
 }
