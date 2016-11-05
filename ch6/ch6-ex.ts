@@ -90,19 +90,19 @@ var sc = new StretchCell('abc', 1, 2);
 
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
 
-function logFive(sequence) {
+function logFive(seq: any) {
     for (var i = 0; i < 5; i++) {
-        if (!sequence.next()) {
+        if (!seq.next()) {
             break
         }
-        console.log(sequence.current());
+        console.log(seq.current());
     }
 }
 
 class ArraySeq {
-    pos;
-    array;
-    constructor(array) {
+    pos: number;
+    array: number[];
+    constructor(array: number[]) {
         this.pos = 1;
         this.array = array;
     }
@@ -119,14 +119,14 @@ class ArraySeq {
 }
 
 class RangeSeq {
-    pos;
-    to;
-    constructor(from, to) {
-        this.pos = from - 1;
-        this.to = to;
+    pos: number;
+    end: number;
+    constructor(start: number, end: number) {
+        this.pos = start - 1;
+        this.end = end;
     }
     next() {
-        if (this.pos >= this.to) {
+        if (this.pos >= this.end) {
             return false;
         }
         this.pos++
@@ -141,7 +141,7 @@ class RangeSeq {
 logFive(new ArraySeq([1, 2]));
 // → 1
 // → 2
-//logFive(new RangeSeq(100, 1000));
+logFive(new RangeSeq(100, 1000));
 // → 100
 // → 101
 // → 102

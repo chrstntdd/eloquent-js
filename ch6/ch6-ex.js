@@ -87,12 +87,12 @@ var sc = new StretchCell('abc', 1, 2);
 // draw method inherited from text. Output doesn't pass test. ¯\_(ツ)_/¯ 
 // → ['abc', '   ']
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
-function logFive(sequence) {
+function logFive(seq) {
     for (var i = 0; i < 5; i++) {
-        if (!sequence.next()) {
+        if (!seq.next()) {
             break;
         }
-        console.log(sequence.current());
+        console.log(seq.current());
     }
 }
 var ArraySeq = (function () {
@@ -113,12 +113,12 @@ var ArraySeq = (function () {
     return ArraySeq;
 }());
 var RangeSeq = (function () {
-    function RangeSeq(from, to) {
-        this.pos = from - 1;
-        this.to = to;
+    function RangeSeq(start, end) {
+        this.pos = start - 1;
+        this.end = end;
     }
     RangeSeq.prototype.next = function () {
-        if (this.pos >= this.to) {
+        if (this.pos >= this.end) {
             return false;
         }
         this.pos++;
@@ -132,7 +132,7 @@ var RangeSeq = (function () {
 logFive(new ArraySeq([1, 2]));
 // → 1
 // → 2
-//logFive(new RangeSeq(100, 1000));
+logFive(new RangeSeq(100, 1000));
 // → 100
 // → 101
 // → 102
