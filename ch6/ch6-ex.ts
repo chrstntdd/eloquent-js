@@ -26,26 +26,27 @@ class Vector {
 
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
 
-//from textbook
+//from textbook.
 function repeat(string: string, times: number): string {
     var result = '';
     for (var i = 0; i < times; i++)
         result += string;
     return result;
 }
-
+//inferred from textbook.
+//minWidth and minHeight methods have been altered from original code.
 class TextCell {
     text: any;
-    constructor(text: any) {
+    constructor(text: string) {
         this.text = text.split('');
     }
     minWidth(): number {
-        return this.text.reduce((width: number, line: any) => Math.max(width, line.length), 0);
-    }
-    minHeight(): number {
         return this.text.length;
     }
-    draw(width: number, height: number) : any[]{
+    minHeight(): number {
+        return 1;
+    }
+    draw(width: number, height: number): any[] {
         var result: any[] = [];
         for (var i = 0; i < height; i++) {
             var line = this.text[i] || '';
@@ -58,31 +59,32 @@ class TextCell {
 class StretchCell extends TextCell {
     width:  number;
     height: number;
-    constructor(text: any, width: number, height: number) {
+    constructor(text: string, width: number, height: number) {
         super(text);
-        this.width  = width;
+        this.width = width;
         this.height = height;
     }
 
     minWidth(): number {
-        return super.minWidth();
+        return Math.max(this.width, super.minWidth());
     }
     minHeight(): number {
-        return super.minHeight();
+        return Math.max(this.height, super.minHeight());
     }
     draw(width: number, height: number): any[] {
-        return super.draw(width, height);
+        return super.draw(this.width, this.height);
     }
 }
 
 
-var sc = new StretchCell(new TextCell('abc'), 1, 2);
+var sc = new StretchCell('abc', 1, 2);
 
 console.log(sc.minWidth());
 // → 3
 console.log(sc.minHeight());
 // → 2
 console.log(sc.draw(3, 2));
+// draw method inherited from text. Output doesn't pass test. ¯\_(ツ)_/¯ 
 // → ['abc', '   ']
 
 

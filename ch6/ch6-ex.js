@@ -31,22 +31,24 @@ var Vector = (function () {
 //console.log(new Vector(3, 4).length);
 // → 5
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
-//from textbook
+//from textbook.
 function repeat(string, times) {
     var result = '';
     for (var i = 0; i < times; i++)
         result += string;
     return result;
 }
+//inferred from textbook.
+//minWidth and minHeight methods have been altered from original code.
 var TextCell = (function () {
     function TextCell(text) {
         this.text = text.split('');
     }
     TextCell.prototype.minWidth = function () {
-        return this.text.reduce(function (width, line) { return Math.max(width, line.length); }, 0);
+        return this.text.length;
     };
     TextCell.prototype.minHeight = function () {
-        return this.text.length;
+        return 1;
     };
     TextCell.prototype.draw = function (width, height) {
         var result = [];
@@ -66,22 +68,23 @@ var StretchCell = (function (_super) {
         this.height = height;
     }
     StretchCell.prototype.minWidth = function () {
-        return _super.prototype.minWidth.call(this);
+        return Math.max(this.width, _super.prototype.minWidth.call(this));
     };
     StretchCell.prototype.minHeight = function () {
-        return _super.prototype.minHeight.call(this);
+        return Math.max(this.height, _super.prototype.minHeight.call(this));
     };
     StretchCell.prototype.draw = function (width, height) {
-        return _super.prototype.draw.call(this, width, height);
+        return _super.prototype.draw.call(this, this.width, this.height);
     };
     return StretchCell;
 }(TextCell));
-var sc = new StretchCell(new TextCell('abc'), 1, 2);
+var sc = new StretchCell('abc', 1, 2);
 console.log(sc.minWidth());
 // → 3
 console.log(sc.minHeight());
 // → 2
 console.log(sc.draw(3, 2));
+// draw method inherited from text. Output doesn't pass test. ¯\_(ツ)_/¯ 
 // → ['abc', '   ']
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
 /*
