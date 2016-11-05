@@ -79,24 +79,71 @@ class StretchCell extends TextCell {
 
 var sc = new StretchCell('abc', 1, 2);
 
-console.log(sc.minWidth());
+//console.log(sc.minWidth());
 // → 3
-console.log(sc.minHeight());
+//console.log(sc.minHeight());
 // → 2
-console.log(sc.draw(3, 2));
+//console.log(sc.draw(3, 2));
 // draw method inherited from text. Output doesn't pass test. ¯\_(ツ)_/¯ 
 // → ['abc', '   ']
 
 
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
-/*
+
+function logFive(sequence) {
+    for (var i = 0; i < 5; i++) {
+        if (!sequence.next()) {
+            break
+        }
+        console.log(sequence.current());
+    }
+}
+
+class ArraySeq {
+    pos;
+    array;
+    constructor(array) {
+        this.pos = 1;
+        this.array = array;
+    }
+    next() {
+        if (this.pos >= this.array.length - 1) {
+            return false
+        }
+        this.pos++;
+        return true;
+    }
+    current() {
+        return this.array[this.pos];
+    }
+}
+
+class RangeSeq {
+    pos;
+    to;
+    constructor(from, to) {
+        this.pos = from - 1;
+        this.to = to;
+    }
+    next() {
+        if (this.pos >= this.to) {
+            return false;
+        }
+        this.pos++
+        return true;
+    }
+    current() {
+        return this.pos;
+    }
+}
+
+
 logFive(new ArraySeq([1, 2]));
 // → 1
 // → 2
-logFive(new RangeSeq(100, 1000));
+//logFive(new RangeSeq(100, 1000));
 // → 100
 // → 101
 // → 102
 // → 103
 // → 104
-*/
