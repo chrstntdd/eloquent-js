@@ -13,26 +13,19 @@ function average(array) {
     function plus(a, b) { return a + b; }
     return array.reduce(plus) / array.length;
 }
-// builds up a new object byName that associates names with people.
 var byName = {};
 ancestry.forEach(function (person) {
     byName[person.name] = person;
 });
-/*
-1. filters byName object to remove entries where person.mother == null.
-2. maps each entry in byName object to to subtract when the person was born from when their mother was born.
-3. average() function is called on the newly mapped array to average all the numbers.
-*/
-function avgMotherChildAgeDiff(inputArr) {
-    return average(ancestry.filter(function (person) { return byName[person.mother] !== null; })
-        .map(function (person) { return person.born - byName[person.mother].born; }));
+//filter function is called for each person to test if each person has a mother.
+var hasKnownMother = function (person) { return person.mother in byName; };
+function getMotherChildAgeDiff(person) {
+    return person.born - byName[person.mother].born;
 }
-console.log(byName);
-// → Object
-console.log(avgMotherChildAgeDiff(ancestry));
+console.log(average(ancestry.filter(hasKnownMother).map(getMotherChildAgeDiff)));
 // → 31.2
 //PROBLEM 3 /////////////////////////////////////////////////////////////////////////////
-//assigns century property to each person in the array of objects.
+//assigns century key to each person in the array of objects with value.
 ancestry.forEach(function (person) {
     person.century = Math.ceil(person.died / 100);
 });
@@ -52,8 +45,35 @@ ancestry.forEach(function (person) {
         }
     }
 });
-//TODO: call average function on each property's array of ages.
-console.log(ancestry);
-// → Array[39] with added century property.
 console.log(data);
 // → data object with ages pushed to the arrys within each property.
+//Applies average method on each century value.
+//ANSWER
+for (var century in data) {
+    console.log(century + ": " + average(data[century]).toFixed(1));
+}
+//PROBLEM 4 /////////////////////////////////////////////////////////////////////////////
+function every(input, test) {
+    for (var i = 0; i < input.length; i++) {
+        if (!test(input[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+function some(input, test) {
+    for (var j = 0; j < input.length; j++) {
+        if (test(input[j])) {
+            return true;
+        }
+    }
+    return false;
+}
+console.log(every([NaN, NaN, NaN], isNaN));
+// → true
+console.log(every([NaN, NaN, 4], isNaN));
+// → false
+console.log(some([NaN, 3, 4], isNaN));
+// → true
+console.log(some([2, 3, 4], isNaN));
+// → false

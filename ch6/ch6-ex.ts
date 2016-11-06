@@ -17,11 +17,11 @@ class Vector {
     }
 }
 
-//console.log(new Vector(1, 2).plus(new Vector(2, 3)));
+console.log(new Vector(1, 2).plus(new Vector(2, 3)));
 // → Vector{x: 3, y: 5}
-//console.log(new Vector(1, 2).minus(new Vector(2, 3)));
+console.log(new Vector(1, 2).minus(new Vector(2, 3)));
 // → Vector{x: -1, y: -1}
-//console.log(new Vector(3, 4).length);
+console.log(new Vector(3, 4).length);
 // → 5
 
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
@@ -79,11 +79,11 @@ class StretchCell extends TextCell {
 
 var sc = new StretchCell('abc', 1, 2);
 
-//console.log(sc.minWidth());
+console.log(sc.minWidth());
 // → 3
-//console.log(sc.minHeight());
+console.log(sc.minHeight());
 // → 2
-//console.log(sc.draw(3, 2));
+console.log(sc.draw(3, 2));
 // draw method inherited from text. Output doesn't pass test. ¯\_(ツ)_/¯ 
 // → ['abc', '   ']
 
@@ -100,10 +100,10 @@ function logFive(seq: any) {
 }
 
 class ArraySeq {
-    pos: number;
+    pos:   number;
     array: number[];
     constructor(array: number[]) {
-        this.pos = 1;
+        this.pos   = -1;
         this.array = array;
     }
     next() {
@@ -118,6 +118,7 @@ class ArraySeq {
     }
 }
 
+//using start and end instead of from and to arguments.
 class RangeSeq {
     pos: number;
     end: number;

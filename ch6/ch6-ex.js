@@ -97,7 +97,7 @@ function logFive(seq) {
 }
 var ArraySeq = (function () {
     function ArraySeq(array) {
-        this.pos = 1;
+        this.pos = -1;
         this.array = array;
     }
     ArraySeq.prototype.next = function () {
@@ -112,6 +112,7 @@ var ArraySeq = (function () {
     };
     return ArraySeq;
 }());
+//using start and end instead of from and to arguments.
 var RangeSeq = (function () {
     function RangeSeq(start, end) {
         this.pos = start - 1;
@@ -132,7 +133,7 @@ var RangeSeq = (function () {
 logFive(new ArraySeq([1, 2]));
 // → 1
 // → 2
-logFive(new RangeSeq(100, 1000));
+//logFive(new RangeSeq(100, 1000));
 // → 100
 // → 101
 // → 102
