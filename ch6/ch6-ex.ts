@@ -1,5 +1,5 @@
 //PROBLEM 1 /////////////////////////////////////////////////////////////////////////////
-class Vector {
+export class Vector {
     x: number;
     y: number;
     constructor(x: number, y: number) {
@@ -17,11 +17,11 @@ class Vector {
     }
 }
 
-console.log(new Vector(1, 2).plus(new Vector(2, 3)));
+//console.log(new Vector(1, 2).plus(new Vector(2, 3)));
 // → Vector{x: 3, y: 5}
-console.log(new Vector(1, 2).minus(new Vector(2, 3)));
+//console.log(new Vector(1, 2).minus(new Vector(2, 3)));
 // → Vector{x: -1, y: -1}
-console.log(new Vector(3, 4).length);
+//console.log(new Vector(3, 4).length);
 // → 5
 
 //PROBLEM 2 /////////////////////////////////////////////////////////////////////////////
@@ -79,11 +79,11 @@ class StretchCell extends TextCell {
 
 var sc = new StretchCell('abc', 1, 2);
 
-console.log(sc.minWidth());
+//console.log(sc.minWidth());
 // → 3
-console.log(sc.minHeight());
+//console.log(sc.minHeight());
 // → 2
-console.log(sc.draw(3, 2));
+//console.log(sc.draw(3, 2));
 // draw method inherited from text. Output doesn't pass test. ¯\_(ツ)_/¯ 
 // → ['abc', '   ']
 
@@ -139,10 +139,10 @@ class RangeSeq {
 }
 
 
-logFive(new ArraySeq([1, 2]));
+//logFive(new ArraySeq([1, 2]));
 // → 1
 // → 2
-logFive(new RangeSeq(100, 1000));
+//logFive(new RangeSeq(100, 1000));
 // → 100
 // → 101
 // → 102

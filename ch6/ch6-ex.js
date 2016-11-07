@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24,6 +25,7 @@ var Vector = (function () {
     });
     return Vector;
 }());
+exports.Vector = Vector;
 //console.log(new Vector(1, 2).plus(new Vector(2, 3)));
 // → Vector{x: 3, y: 5}
 //console.log(new Vector(1, 2).minus(new Vector(2, 3)));
@@ -130,7 +132,7 @@ var RangeSeq = (function () {
     };
     return RangeSeq;
 }());
-logFive(new ArraySeq([1, 2]));
+//logFive(new ArraySeq([1, 2]));
 // → 1
 // → 2
 //logFive(new RangeSeq(100, 1000));
