@@ -95,7 +95,7 @@ var World = (function () {
         var grid = new Grid(map[0].length, map.length);
         this.grid = grid;
         this.legend = legend;
-        map = map.forEach(function (line, y) {
+        this.map = map.forEach(function (line, y) {
             for (var x = 0; x < line.length; x++)
                 grid.set(new ch6_ex_1.Vector(x, y), elementFromChar(legend, line[x]));
         });

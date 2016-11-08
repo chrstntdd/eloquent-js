@@ -11,45 +11,45 @@ const directions = {
     'nw': new Vector(-1,-1)
 };
 
-const plan = ["############################",
-            "#      #    #      o      ##",
-            "#                          #",
-            "#          #####           #",
-            "##         #   #    ##     #",
-            "###           ##     #     #",
-            "#           ###      #     #",
-            "#   ####                   #",
-            "#   ##       o             #",
-            "# o  #         o       ### #",
-            "#    #                     #",
-            "############################"];
+const plan: string[] = ["############################",
+                        "#      #    #      o      ##",
+                        "#                          #",
+                        "#          #####           #",
+                        "##         #   #    ##     #",
+                        "###           ##     #     #",
+                        "#           ###      #     #",
+                        "#   ####                   #",
+                        "#   ##       o             #",
+                        "# o  #         o       ### #",
+                        "#    #                     #",
+                        "############################"];
 
-var directionNames = 'n ne e se s sw w nw'.split(' ');
+var directionNames: string[] = 'n ne e se s sw w nw'.split(' ');
 
-function randomElement(array){
+function randomElement(array: string[]){
     return array[Math.floor(Math.random() * array.length)];
 }
 
 class Grid{
     space: any;
     width: number;
-    height: number
-    constructor(width, height){
+    height: number;
+    constructor(width: number, height: number){
         this.space = new Array(width * height);
         this.width = width;
         this.height = height;
     }
-    isInside(vector){
+    isInside(vector: any){
         return vector.x >= 0 && vector.x < this.width &&
                vector.y >= 0 && vector.y < this.height;
     }
-    get(vector){
+    get(vector: any){
         return this.space[vector.x + this.width * vector.y];
     }
-    set(vector, value){
+    set(vector: any, value: any){
         this.space[vector.x + this.width * vector.y] = value;
     }
-    forEach(f, context) {
+    forEach(f: any, context: any) {
         for (var y = 0; y < this.height; y++) {
             for (var x = 0; x < this.width; x++) {
                 let value = this.space[x + y * this.width];
@@ -68,7 +68,7 @@ class Grid{
 //console.log(grid.get(new Vector(1, 1)));
 // → X
 
-function elementFromChar(legend, ch){
+function elementFromChar(legend: any, ch: string){
     if (ch == ' '){
         return null;
     }
@@ -76,7 +76,7 @@ function elementFromChar(legend, ch){
     element.originChar = ch;
     return element;
 }
-function charFromElement(element){
+function charFromElement(element: any){
     if (element == null){
         return ' ';
     } else {
@@ -87,11 +87,11 @@ function charFromElement(element){
 function Wall(){};
 
 class BouncingCritter{
-    direction;
-    constructor(direction){
+    direction: string;
+    constructor(direction: string){
         this.direction = randomElement(directionNames);
     }
-    act(view){
+    act(view: any){
         if( view.look(this.direction)!= ' '){
             this.direction = view.find(' ') || 's';
         }
@@ -100,14 +100,14 @@ class BouncingCritter{
 }
 
 class World{
-    grid;
-    legend;
-    map;
-    constructor(map, legend) {
-        var grid = new Grid(map[0].length, map.length);
-        this.grid = grid;
-        this.legend = legend;
-        map = map.forEach(function (line, y) {
+    grid:   any;
+    legend: any;
+    map:    any;
+    constructor(map: string[], legend: any) {
+        var grid       = new Grid(map[0].length, map.length);
+        this.grid      = grid;
+        this.legend    = legend;
+        this.map       = map.forEach(function (line, y) {
             for (var x = 0; x < line.length; x++)
                 grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
         })
@@ -124,15 +124,15 @@ class World{
         return output;
     };
     turn(){
-        let acted = [];
-        this.grid.forEach(function(critter, vector){
+        let acted: any[] = [];
+        this.grid.forEach(function(critter: any, vector: any){
             if (critter.act && acted.indexOf(critter) == -1){
                 acted.push(critter);
                 this.letAct(critter, vector);
             }
         }, this);
     };
-    private letAct(critter, vector){
+    private letAct(critter: any, vector: any){
         let action = critter.act(new View(this, vector));
         if (action && action.type == 'move'){
             let dest = this.checkDestination(action, vector);
@@ -142,7 +142,7 @@ class World{
             }
         }
     };
-    private checkDestination(action, vector){
+    private checkDestination(action: any, vector: any){
         if (directions.hasOwnProperty(action.direction)){
             let dest = vector.plus(directions[action.direction]);
             if (this.grid.isInside(dest)){
@@ -157,13 +157,13 @@ var world = new World(plan, {"#": Wall,
 
 
 class View {
-    world;
-    vector;
-    constructor(world, vector){
-        this.world = world;
+    world:  any;
+    vector: any;
+    constructor(world: any, vector: any){
+        this.world  = world;
         this.vector = vector;
     }
-    look(dir){
+    look(dir: string){
         let target = this.vector.plus(directions[dir]);
         if (this.world.grid.isInside(target)){
             return charFromElement(this.world.grid.get(target));
@@ -171,8 +171,8 @@ class View {
             return '#';
         }
     }
-    findAll(ch){
-        let found = [];
+    findAll(ch: string){
+        let found: string[] = [];
         for (var dir in directions){
             if (this.look(dir) == ch){
                 found.push(dir);
@@ -180,7 +180,7 @@ class View {
             return found;
         }
     }
-    find(ch){
+    find(ch: string){
         var found = this.findAll(ch);
         if (found.length == 0){
             return null;
