@@ -14,7 +14,7 @@ var plan = ["############################",
     "#      #    #      o      ##",
     "#                          #",
     "#          #####           #",
-    "##         #   #    ##     #",
+    "##         #  ~#    ##     #",
     "###           ##     #     #",
     "#           ###      #     #",
     "#   ####                   #",
@@ -95,11 +95,12 @@ var World = (function () {
         var grid = new Grid(map[0].length, map.length);
         this.grid = grid;
         this.legend = legend;
-        map = map.forEach(function (line, y) {
+        this.map = map.forEach(function (line, y) {
             for (var x = 0; x < line.length; x++)
                 grid.set(new ch6_ex_1.Vector(x, y), elementFromChar(legend, line[x]));
         });
     }
+    ;
     World.prototype.toString = function () {
         var output = '';
         for (var y = 0; y < this.grid.height; y++) {
@@ -144,8 +145,6 @@ var World = (function () {
     ;
     return World;
 }());
-var world = new World(plan, { "#": Wall,
-    "o": BouncingCritter });
 var View = (function () {
     function View(world, vector) {
         this.world = world;
@@ -160,6 +159,7 @@ var View = (function () {
             return '#';
         }
     };
+    ;
     View.prototype.findAll = function (ch) {
         var found = [];
         for (var dir in directions) {
@@ -169,6 +169,7 @@ var View = (function () {
             return found;
         }
     };
+    ;
     View.prototype.find = function (ch) {
         var found = this.findAll(ch);
         if (found.length == 0) {
@@ -176,8 +177,38 @@ var View = (function () {
         }
         return randomElement(found);
     };
+    ;
     return View;
 }());
+function dirPlus(dir, n) {
+    var index = directionNames.indexOf(dir);
+    return directionNames[(index + n + 8) % 8];
+}
+var WallFlower = (function () {
+    function WallFlower(dir) {
+        this.dir = 's';
+    }
+    ;
+    WallFlower.prototype.act = function (view) {
+        var start = this.dir;
+        if (view.look(dirPlus(this.dir, -3)) != ' ') {
+            start = this.dir = dirPlus(this.dir, -2);
+        }
+        while (view.look(this.dir) != ' ') {
+            this.dir = dirPlus(this.dir, 1);
+            if (this.dir == start) {
+                break;
+            }
+        }
+        return { type: 'move', direction: this.dir };
+    };
+    ;
+    return WallFlower;
+}());
+//initalize world.
+var world = new World(plan, { '#': Wall,
+    'o': BouncingCritter,
+    '~': WallFlower });
 for (var i = 0; i < 10; i++) {
     world.turn();
     console.log(world.toString());
