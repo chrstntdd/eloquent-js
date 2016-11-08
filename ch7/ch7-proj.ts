@@ -49,6 +49,16 @@ class Grid{
     set(vector, value){
         this.space[vector.x + this.width * vector.y] = value;
     }
+    forEach(f, context) {
+        for (var y = 0; y < this.height; y++) {
+            for (var x = 0; x < this.width; x++) {
+                let value = this.space[x + y * this.width];
+                if (value != null) {
+                    f.call(context, value, new Vector(x, y));
+                }
+            }
+        }
+    }
 }
 
 //var grid = new Grid(5,5);
@@ -93,8 +103,6 @@ class World{
     grid;
     legend;
     map;
-
-
     constructor(map, legend) {
         var grid = new Grid(map[0].length, map.length);
         this.grid = grid;
@@ -104,7 +112,6 @@ class World{
                 grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
         })
     }
-
     toString(){
         let output = '';
         for(var y = 0; y < this.grid.height; y++){
@@ -116,8 +123,74 @@ class World{
         }
         return output;
     };
+    turn(){
+        let acted = [];
+        this.grid.forEach(function(critter, vector){
+            if (critter.act && acted.indexOf(critter) == -1){
+                acted.push(critter);
+                this.letAct(critter, vector);
+            }
+        }, this);
+    };
+    private letAct(critter, vector){
+        let action = critter.act(new View(this, vector));
+        if (action && action.type == 'move'){
+            let dest = this.checkDestination(action, vector);
+            if (dest && this.grid.get(dest) == null){
+                this.grid.set(vector, null);
+                this.grid.set(dest, critter);
+            }
+        }
+    };
+    private checkDestination(action, vector){
+        if (directions.hasOwnProperty(action.direction)){
+            let dest = vector.plus(directions[action.direction]);
+            if (this.grid.isInside(dest)){
+                return dest;
+            }
+        }
+    };
 }
 
 var world = new World(plan, {"#": Wall,
                              "o": BouncingCritter});
-console.log(world.toString());
+
+
+class View {
+    world;
+    vector;
+    constructor(world, vector){
+        this.world = world;
+        this.vector = vector;
+    }
+    look(dir){
+        let target = this.vector.plus(directions[dir]);
+        if (this.world.grid.isInside(target)){
+            return charFromElement(this.world.grid.get(target));
+        } else {
+            return '#';
+        }
+    }
+    findAll(ch){
+        let found = [];
+        for (var dir in directions){
+            if (this.look(dir) == ch){
+                found.push(dir);
+            }
+            return found;
+        }
+    }
+    find(ch){
+        var found = this.findAll(ch);
+        if (found.length == 0){
+            return null;
+        }
+        return randomElement(found);
+    }
+}
+
+
+for (var i = 0; i < 10; i++) {
+  world.turn();
+  console.log(world.toString());
+}
