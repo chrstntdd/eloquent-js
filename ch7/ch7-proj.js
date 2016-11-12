@@ -211,23 +211,18 @@ var WallFlower = (function () {
     return WallFlower;
 }());
 //initalize world.
-var world = new World(plan, { '#': Wall,
-    'o': BouncingCritter,
-    '~': WallFlower });
-//print 10 turns of life.
-for (var i = 0; i < 10; i++) {
-    world.turn();
-    console.log(world.toString());
-}
+//var world = new World(plan, {'#': Wall,
+//                             'o': BouncingCritter,
+//                             '~': WallFlower});
 var actionTypes = Object.create(null);
-var LifeLikeWorld = (function (_super) {
-    __extends(LifeLikeWorld, _super);
-    function LifeLikeWorld(map, legend) {
+var LifelikeWorld = (function (_super) {
+    __extends(LifelikeWorld, _super);
+    function LifelikeWorld(map, legend) {
         _super.call(this, map, legend);
         World.call(this, map, legend);
         Object.create(World);
     }
-    LifeLikeWorld.prototype.letActLL = function (critter, vector) {
+    LifelikeWorld.prototype.letActLL = function (critter, vector) {
         var action = critter.act(new View(this, vector));
         var handled = action && actionTypes[action.type].call(this, critter, vector, action);
         if (!handled) {
@@ -237,7 +232,7 @@ var LifeLikeWorld = (function (_super) {
             }
         }
     };
-    return LifeLikeWorld;
+    return LifelikeWorld;
 }(World));
 actionTypes.grow = function (critter) {
     critter.energy += 0.5;
@@ -273,3 +268,71 @@ actionTypes.sex = function (critter, vector, action) {
     this.grid.set(dest, baby);
     return true;
 };
+var Plant = (function () {
+    function Plant(energy) {
+        this.energy = 3 + Math.random() * 4;
+    }
+    Plant.prototype.act = function (view) {
+        if (this.energy > 15) {
+            var space = view.find(" ");
+            if (space)
+                return {
+                    type: "reproduce",
+                    direction: space
+                };
+        }
+        if (this.energy < 20)
+            return {
+                type: "grow",
+                direction: undefined
+            };
+    };
+    return Plant;
+}());
+var PlantEater = (function () {
+    function PlantEater(energy) {
+        this.energy = 20;
+    }
+    PlantEater.prototype.act = function (view) {
+        var space = view.find(' ');
+        if (this.energy > 60 && space) {
+            return {
+                type: 'reproduce',
+                direction: space
+            };
+        }
+        var plant = view.find('*');
+        if (plant) {
+            return {
+                type: 'eat',
+                direction: plant
+            };
+        }
+        if (space) {
+            return {
+                type: 'move',
+                direction: space
+            };
+        }
+    };
+    return PlantEater;
+}());
+var valley = new LifelikeWorld(["############################",
+    "#####                 ######",
+    "##   ***                **##",
+    "#   *##**         **  O  *##",
+    "#    ***     O    ##**    *#",
+    "#       O         ##***    #",
+    "#                 ##**     #",
+    "#   O       #*             #",
+    "#*          #**       O    #",
+    "#***        ##**    O    **#",
+    "##****     ###***       *###",
+    "############################"], { "#": Wall,
+    "O": PlantEater,
+    "*": Plant });
+//print 10 turns of life.
+for (var i = 0; i < 666; i++) {
+    valley.turn();
+    console.log(valley.toString());
+}

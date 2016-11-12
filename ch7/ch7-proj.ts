@@ -212,19 +212,14 @@ class WallFlower{
 }
 
 //initalize world.
-var world = new World(plan, {'#': Wall,
-                             'o': BouncingCritter,
-                             '~': WallFlower});
+//var world = new World(plan, {'#': Wall,
+//                             'o': BouncingCritter,
+//                             '~': WallFlower});
 
-//print 10 turns of life.
-for (var i = 0; i < 10; i++) {
-  world.turn();
-  console.log(world.toString());
-}
 
 let actionTypes = Object.create(null);
 
-class LifeLikeWorld extends World{
+class LifelikeWorld extends World{
     map;
     legend;
     constructor(map, legend){
@@ -281,4 +276,80 @@ actionTypes.sex = function( critter, vector, action){
     critter.energy -= 2 * baby.energy;
     this.grid.set(dest, baby);
     return true;
+}
+
+class Plant {
+    energy;
+    constructor(energy) {
+        this.energy = 3 + Math.random() * 4;
+    }
+    act(view) {
+        if (this.energy > 15) {
+            var space = view.find(" ");
+            if (space)
+                return {
+                    type: "reproduce",
+                    direction: space
+                };
+        }
+        if (this.energy < 20)
+            return {
+                type: "grow",
+                direction: undefined
+            };
+    }
+}
+
+class PlantEater{
+    energy; 
+    constructor(energy){
+        this.energy = 20;
+    }
+    act(view){
+        let space = view.find(' ');
+        if (this.energy > 60 && space){
+            return {
+                type: 'reproduce',
+                direction: space
+            };
+        }
+        let plant = view.find('*');
+        if(plant) {
+            return {
+                type: 'eat',
+                direction: plant
+            };
+        }
+        if(space){
+            return {
+                type: 'move',
+                direction: space
+            }
+        }
+    }
+}
+
+var valley = new LifelikeWorld(
+  ["############################",
+   "#####                 ######",
+   "##   ***                **##",
+   "#   *##**         **  O  *##",
+   "#    ***     O    ##**    *#",
+   "#       O         ##***    #",
+   "#                 ##**     #",
+   "#   O       #*             #",
+   "#*          #**       O    #",
+   "#***        ##**    O    **#",
+   "##****     ###***       *###",
+   "############################"],
+  {"#": Wall,
+   "O": PlantEater,
+   "*": Plant}
+);
+
+
+//print 10 turns of life.
+for (var i = 0; i < 666; i++) {
+  valley.turn();
+  console.log(valley.toString());
 }
