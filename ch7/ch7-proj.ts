@@ -222,4 +222,63 @@ for (var i = 0; i < 10; i++) {
   console.log(world.toString());
 }
 
-//help
+let actionTypes = Object.create(null);
+
+class LifeLikeWorld extends World{
+    map;
+    legend;
+    constructor(map, legend){
+        super(map,legend);
+        World.call(this,map,legend);
+        Object.create(World);
+    }
+    letActLL(critter, vector){
+        let action = critter.act(new View(this, vector));
+        let handled = action && actionTypes[action.type].call(this, critter, vector, action);
+
+        if (!handled){
+            critter.energy -= 0.2;
+            if(critter.energy <= 0){
+                this.grid.set(vector,null);
+            }
+        }
+    }
+}
+
+actionTypes.grow = function(critter){
+    critter.energy += 0.5;
+    return true;
+} 
+
+actionTypes.move = function(critter, vector, action){
+    let dest = this.checkDestination(action, vector);
+    if (dest == null || critter.energy <= 1 || this.grid.get(dest) != null){
+        return false;
+    }
+    critter.energy -= 1;
+    this.grid.set(vector, null);
+    this.grid.set(dest, critter);
+    return true;
+}
+
+actionTypes.eat = function(critter, vector, action){
+    let dest = this.checkDestination(action, vector);
+    let atDest = dest != null && this.grid.get(dest);
+    if(!atDest || atDest.energy == null){
+        return false;
+    }
+    critter.energy += atDest.energy;
+    this.grid.set(dest, null);
+    return true;
+}
+
+actionTypes.sex = function( critter, vector, action){
+    let baby = elementFromChar(this.legend, critter.originChar);
+    let dest = this.checkDestination(action, vector);
+    if (dest == null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null){
+        return false;
+    }
+    critter.energy -= 2 * baby.energy;
+    this.grid.set(dest, baby);
+    return true;
+}

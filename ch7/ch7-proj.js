@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var ch6_ex_1 = require('../ch6/ch6-ex');
 var directions = {
     'n': new ch6_ex_1.Vector(0, 1),
@@ -14,13 +19,13 @@ var plan = ["############################",
     "#      #    #      o      ##",
     "#                          #",
     "#          #####           #",
-    "##         #  ~#    ##     #",
+    "##         #~  #    ##     #",
     "###           ##     #     #",
     "#           ###      #     #",
     "#   ####                   #",
     "#   ##       o             #",
     "# o  #         o       ### #",
-    "#    #                     #",
+    "#    #~                    #",
     "############################"];
 var directionNames = 'n ne e se s sw w nw'.split(' ');
 function randomElement(array) {
@@ -209,7 +214,62 @@ var WallFlower = (function () {
 var world = new World(plan, { '#': Wall,
     'o': BouncingCritter,
     '~': WallFlower });
+//print 10 turns of life.
 for (var i = 0; i < 10; i++) {
     world.turn();
     console.log(world.toString());
 }
+var actionTypes = Object.create(null);
+var LifeLikeWorld = (function (_super) {
+    __extends(LifeLikeWorld, _super);
+    function LifeLikeWorld(map, legend) {
+        _super.call(this, map, legend);
+        World.call(this, map, legend);
+        Object.create(World);
+    }
+    LifeLikeWorld.prototype.letActLL = function (critter, vector) {
+        var action = critter.act(new View(this, vector));
+        var handled = action && actionTypes[action.type].call(this, critter, vector, action);
+        if (!handled) {
+            critter.energy -= 0.2;
+            if (critter.energy <= 0) {
+                this.grid.set(vector, null);
+            }
+        }
+    };
+    return LifeLikeWorld;
+}(World));
+actionTypes.grow = function (critter) {
+    critter.energy += 0.5;
+    return true;
+};
+actionTypes.move = function (critter, vector, action) {
+    var dest = this.checkDestination(action, vector);
+    if (dest == null || critter.energy <= 1 || this.grid.get(dest) != null) {
+        return false;
+    }
+    critter.energy -= 1;
+    this.grid.set(vector, null);
+    this.grid.set(dest, critter);
+    return true;
+};
+actionTypes.eat = function (critter, vector, action) {
+    var dest = this.checkDestination(action, vector);
+    var atDest = dest != null && this.grid.get(dest);
+    if (!atDest || atDest.energy == null) {
+        return false;
+    }
+    critter.energy += atDest.energy;
+    this.grid.set(dest, null);
+    return true;
+};
+actionTypes.sex = function (critter, vector, action) {
+    var baby = elementFromChar(this.legend, critter.originChar);
+    var dest = this.checkDestination(action, vector);
+    if (dest == null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null) {
+        return false;
+    }
+    critter.energy -= 2 * baby.energy;
+    this.grid.set(dest, baby);
+    return true;
+};
