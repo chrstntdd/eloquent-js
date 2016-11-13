@@ -214,7 +214,6 @@ var WallFlower = (function () {
 //var world = new World(plan, {'#': Wall,
 //                             'o': BouncingCritter,
 //                             '~': WallFlower});
-var actionTypes = Object.create(null);
 var LifelikeWorld = (function (_super) {
     __extends(LifelikeWorld, _super);
     function LifelikeWorld(map, legend) {
@@ -222,7 +221,7 @@ var LifelikeWorld = (function (_super) {
         World.call(this, map, legend);
         Object.create(World);
     }
-    LifelikeWorld.prototype.letActLL = function (critter, vector) {
+    LifelikeWorld.prototype.letAct = function (critter, vector) {
         var action = critter.act(new View(this, vector));
         var handled = action && actionTypes[action.type].call(this, critter, vector, action);
         if (!handled) {
@@ -234,6 +233,7 @@ var LifelikeWorld = (function (_super) {
     };
     return LifelikeWorld;
 }(World));
+var actionTypes = Object.create(null);
 actionTypes.grow = function (critter) {
     critter.energy += 0.5;
     return true;
@@ -258,7 +258,7 @@ actionTypes.eat = function (critter, vector, action) {
     this.grid.set(dest, null);
     return true;
 };
-actionTypes.sex = function (critter, vector, action) {
+actionTypes.reproduce = function (critter, vector, action) {
     var baby = elementFromChar(this.legend, critter.originChar);
     var dest = this.checkDestination(action, vector);
     if (dest == null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null) {

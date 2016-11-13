@@ -132,7 +132,7 @@ class World{
             }
         }, this);
     };
-    private letAct(critter: any, vector: any){
+    protected letAct(critter: any, vector: any){
         let action = critter.act(new View(this, vector));
         if (action && action.type == 'move'){
             let dest = this.checkDestination(action, vector);
@@ -217,17 +217,15 @@ class WallFlower{
 //                             '~': WallFlower});
 
 
-let actionTypes = Object.create(null);
-
 class LifelikeWorld extends World{
-    map;
-    legend;
-    constructor(map, legend){
+    map: any;
+    legend: any;
+    constructor(map: any, legend: any){
         super(map,legend);
         World.call(this,map,legend);
         Object.create(World);
     }
-    letActLL(critter, vector){
+    letAct(critter: any, vector: any){
         let action = critter.act(new View(this, vector));
         let handled = action && actionTypes[action.type].call(this, critter, vector, action);
 
@@ -240,12 +238,14 @@ class LifelikeWorld extends World{
     }
 }
 
-actionTypes.grow = function(critter){
+let actionTypes = Object.create(null);
+
+actionTypes.grow = function(critter: any){
     critter.energy += 0.5;
     return true;
 } 
 
-actionTypes.move = function(critter, vector, action){
+actionTypes.move = function(critter: any, vector: any, action: any){
     let dest = this.checkDestination(action, vector);
     if (dest == null || critter.energy <= 1 || this.grid.get(dest) != null){
         return false;
@@ -256,7 +256,7 @@ actionTypes.move = function(critter, vector, action){
     return true;
 }
 
-actionTypes.eat = function(critter, vector, action){
+actionTypes.eat = function(critter: any, vector: any, action: any){
     let dest = this.checkDestination(action, vector);
     let atDest = dest != null && this.grid.get(dest);
     if(!atDest || atDest.energy == null){
@@ -267,7 +267,7 @@ actionTypes.eat = function(critter, vector, action){
     return true;
 }
 
-actionTypes.sex = function( critter, vector, action){
+actionTypes.reproduce = function(critter: any, vector: any, action: any){
     let baby = elementFromChar(this.legend, critter.originChar);
     let dest = this.checkDestination(action, vector);
     if (dest == null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null){
@@ -279,11 +279,11 @@ actionTypes.sex = function( critter, vector, action){
 }
 
 class Plant {
-    energy;
-    constructor(energy) {
+    energy: number;
+    constructor(energy: number) {
         this.energy = 3 + Math.random() * 4;
     }
-    act(view) {
+    act(view: any) {
         if (this.energy > 15) {
             var space = view.find(" ");
             if (space)
@@ -301,11 +301,11 @@ class Plant {
 }
 
 class PlantEater{
-    energy; 
-    constructor(energy){
+    energy: number; 
+    constructor(energy: number){
         this.energy = 20;
     }
-    act(view){
+    act(view: any){
         let space = view.find(' ');
         if (this.energy > 60 && space){
             return {
