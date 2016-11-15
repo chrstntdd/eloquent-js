@@ -5,7 +5,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ch6_ex_1 = require('../ch6/ch6-ex');
-require();
 var directions = {
     'n': new ch6_ex_1.Vector(0, 1),
     'ne': new ch6_ex_1.Vector(1, -1),
@@ -319,21 +318,22 @@ var PlantEater = (function () {
     return PlantEater;
 }());
 var valley = new LifelikeWorld(["############################",
-    "#####                 ######",
-    "##   ***                **##",
-    "#   *##**         **  O  *##",
-    "#    ***     O    ##**    *#",
-    "#       O         ##***    #",
-    "#                 ##**     #",
-    "#   O       #*             #",
-    "#*          #**       O    #",
-    "#***        ##**    O    **#",
-    "##****     ###***       *###",
-    "############################"], { "#": Wall,
-    "O": PlantEater,
-    "*": Plant });
+                                "#####                 ######",
+                                "##   ***                **##",
+                                "#   *##**         **  O  *##",
+                                "#    ***     O    ##**    *#",
+                                "#       O         ##***    #",
+                                "#                 ##**     #",
+                                "#   O       #*             #",
+                                "#*          #**       O    #",
+                                "#***        ##**    O    **#",
+                                "##****     ###***       *###",
+                                "############################"], 
+                                { "#": Wall,
+                                "O":   PlantEater,
+                                "*":   Plant });
 //print 10 turns of life.
-// for (var i = 0; i < 666; i++) {
-//   valley.turn();
-//   console.log(valley.toString());
-// } 
+for (var i = 0; i < 10; i++) {
+    valley.turn();
+    console.log(valley.toString());
+}

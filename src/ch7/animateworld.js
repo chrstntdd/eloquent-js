@@ -54,3 +54,5 @@
 
   window.animateWorld = function(world) { new Animated(world); };
 })();
+
+export {Animated};

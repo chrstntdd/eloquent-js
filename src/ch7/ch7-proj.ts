@@ -350,7 +350,7 @@ var valley = new LifelikeWorld(
 
 
 //print 10 turns of life.
-// for (var i = 0; i < 666; i++) {
-//   valley.turn();
-//   console.log(valley.toString());
-// }
+ for (var i = 0; i < 10; i++) {
+   valley.turn();
+   console.log(valley.toString());
+ }
