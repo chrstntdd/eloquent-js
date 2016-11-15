@@ -1,5 +1,5 @@
 import {Vector} from '../ch6/ch6-ex';
-import {Animated, window} from './animateworld.js'
+import {Animated} from './animateworld'
 
 const directions = {
     'n':  new Vector( 0, 1),
@@ -12,18 +12,18 @@ const directions = {
     'nw': new Vector(-1,-1)
 };
 
-const plan: string[] = ["############################",
-                        "#      #    #      o      ##",
-                        "#                          #",
-                        "#          #####           #",
-                        "##         #~  #    ##     #",
-                        "###           ##     #     #",
-                        "#           ###      #     #",
-                        "#   ####                   #",
-                        "#   ##       o             #",
-                        "# o  #         o       ### #",
-                        "#    #~                    #",
-                        "############################"];
+const plan: string[] = ['############################',
+                        '#      #    #      o      ##',
+                        '#                          #',
+                        '#          #####           #',
+                        '##         #~  #    ##     #',
+                        '###           ##     #     #',
+                        '#           ###      #     #',
+                        '#   ####                   #',
+                        '#   ##       o             #',
+                        '# o  #         o       ### #',
+                        '#    #~                    #',
+                        '############################'];
 
 var directionNames: string[] = 'n ne e se s sw w nw'.split(' ');
 
@@ -65,7 +65,7 @@ class Grid{
 //var grid = new Grid(5,5);
 //console.log(grid.get(new Vector(1,1)));
 // → undefined
-//grid.set(new Vector(1, 1), "X");
+//grid.set(new Vector(1, 1), 'X');
 //console.log(grid.get(new Vector(1, 1)));
 // → X
 
@@ -286,16 +286,16 @@ class Plant {
     }
     act(view: any) {
         if (this.energy > 15) {
-            var space = view.find(" ");
+            var space = view.find(' ');
             if (space)
                 return {
-                    type: "reproduce",
+                    type: 'reproduce',
                     direction: space
                 };
         }
         if (this.energy < 20)
             return {
-                type: "grow",
+                type: 'grow',
                 direction: undefined
             };
     }
@@ -331,21 +331,21 @@ class PlantEater{
 }
 
 var valley = new LifelikeWorld(
-  ["############################",
-   "#####                 ######",
-   "##   ***                **##",
-   "#   *##**         **  O  *##",
-   "#    ***     O    ##**    *#",
-   "#       O         ##***    #",
-   "#                 ##**     #",
-   "#   O       #*             #",
-   "#*          #**       O    #",
-   "#***        ##**    O    **#",
-   "##****     ###***       *###",
-   "############################"],
-  {"#": Wall,
-   "O": PlantEater,
-   "*": Plant}
+  ['############################',
+   '#####                 ######',
+   '##   ***                **##',
+   '#   *##**         **  O  *##',
+   '#    ***     O    ##**    *#',
+   '#       O         ##***    #',
+   '#                 ##**     #',
+   '#   O       #*             #',
+   '#*          #**       O    #',
+   '#***        ##**    O    **#',
+   '##****     ###***       *###',
+   '############################'],
+  {'#': Wall,
+   'O': PlantEater,
+   '*': Plant}
 );
 
 

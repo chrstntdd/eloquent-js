@@ -15,18 +15,18 @@ var directions = {
     'w': new ch6_ex_1.Vector(-1, 0),
     'nw': new ch6_ex_1.Vector(-1, -1)
 };
-var plan = ["############################",
-    "#      #    #      o      ##",
-    "#                          #",
-    "#          #####           #",
-    "##         #~  #    ##     #",
-    "###           ##     #     #",
-    "#           ###      #     #",
-    "#   ####                   #",
-    "#   ##       o             #",
-    "# o  #         o       ### #",
-    "#    #~                    #",
-    "############################"];
+var plan = ['############################',
+    '#      #    #      o      ##',
+    '#                          #',
+    '#          #####           #',
+    '##         #~  #    ##     #',
+    '###           ##     #     #',
+    '#           ###      #     #',
+    '#   ####                   #',
+    '#   ##       o             #',
+    '# o  #         o       ### #',
+    '#    #~                    #',
+    '############################'];
 var directionNames = 'n ne e se s sw w nw'.split(' ');
 function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -62,7 +62,7 @@ var Grid = (function () {
 //var grid = new Grid(5,5);
 //console.log(grid.get(new Vector(1,1)));
 // → undefined
-//grid.set(new Vector(1, 1), "X");
+//grid.set(new Vector(1, 1), 'X');
 //console.log(grid.get(new Vector(1, 1)));
 // → X
 function elementFromChar(legend, ch) {
@@ -274,16 +274,16 @@ var Plant = (function () {
     }
     Plant.prototype.act = function (view) {
         if (this.energy > 15) {
-            var space = view.find(" ");
+            var space = view.find(' ');
             if (space)
                 return {
-                    type: "reproduce",
+                    type: 'reproduce',
                     direction: space
                 };
         }
         if (this.energy < 20)
             return {
-                type: "grow",
+                type: 'grow',
                 direction: undefined
             };
     };
@@ -317,20 +317,20 @@ var PlantEater = (function () {
     };
     return PlantEater;
 }());
-var valley = new LifelikeWorld(["############################",
-    "#####                 ######",
-    "##   ***                **##",
-    "#   *##**         **  O  *##",
-    "#    ***     O    ##**    *#",
-    "#       O         ##***    #",
-    "#                 ##**     #",
-    "#   O       #*             #",
-    "#*          #**       O    #",
-    "#***        ##**    O    **#",
-    "##****     ###***       *###",
-    "############################"], { "#": Wall,
-    "O": PlantEater,
-    "*": Plant });
+var valley = new LifelikeWorld(['############################',
+    '#####                 ######',
+    '##   ***                **##',
+    '#   *##**         **  O  *##',
+    '#    ***     O    ##**    *#',
+    '#       O         ##***    #',
+    '#                 ##**     #',
+    '#   O       #*             #',
+    '#*          #**       O    #',
+    '#***        ##**    O    **#',
+    '##****     ###***       *###',
+    '############################'], { '#': Wall,
+    'O': PlantEater,
+    '*': Plant });
 //print 10 turns of life.
 // for (var i = 0; i < 10; i++) {
 //   valley.turn();

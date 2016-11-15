@@ -52,6 +52,3 @@
 
   window.animateWorld = function(world) { new Animated(world); };
 })();
-
-exports.Animated = Animated;
-exports.window = window;
