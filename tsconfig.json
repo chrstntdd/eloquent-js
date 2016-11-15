@@ -1,8 +1,8 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "target": "es5",
-    "removeComments": false,
-    "noImplicitAny": true
-  }
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "removeComments": false,
+        "noImplicitAny": true
+    }
 }
