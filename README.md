@@ -1,8 +1,17 @@
 # eloquent-js-exercises
-This repo exists to hold all files that contain my solutions to the end of chapter exercises as I read through Eloquent Javascript by Martin Haverbeke.
+This repo exists to hold all files that contain my solutions to the end of chapter exercises as I read through [Eloquent Javascript by Martin Haverbeke](http://eloquentjavascript.net/).
 
-Each directory is separated by chapter and contains the following: 
+Each chapter has it's own dedicated directory within the ```src``` folder.
+All chapter folders will contain the following:
 + an authored TypeScript file (for fun).
-+ a compiled JavaScript file.
-+ the instructions in markdown for each end of chapter exercises.
-+ any image assets.
++ a compiled Javascript file.
++ the end of chapter instructions in markdown.
++ any other assets (html,img,js).
+
+This project also has a few dependencies used for setting up development within the browser. These can be installed by either:
+
+```npm install```
+
+or
+
+```yarn install```
