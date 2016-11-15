@@ -318,22 +318,22 @@ var PlantEater = (function () {
     return PlantEater;
 }());
 var valley = new LifelikeWorld(["############################",
-                                "#####                 ######",
-                                "##   ***                **##",
-                                "#   *##**         **  O  *##",
-                                "#    ***     O    ##**    *#",
-                                "#       O         ##***    #",
-                                "#                 ##**     #",
-                                "#   O       #*             #",
-                                "#*          #**       O    #",
-                                "#***        ##**    O    **#",
-                                "##****     ###***       *###",
-                                "############################"], 
-                                { "#": Wall,
-                                "O":   PlantEater,
-                                "*":   Plant });
+    "#####                 ######",
+    "##   ***                **##",
+    "#   *##**         **  O  *##",
+    "#    ***     O    ##**    *#",
+    "#       O         ##***    #",
+    "#                 ##**     #",
+    "#   O       #*             #",
+    "#*          #**       O    #",
+    "#***        ##**    O    **#",
+    "##****     ###***       *###",
+    "############################"], { "#": Wall,
+    "O": PlantEater,
+    "*": Plant });
 //print 10 turns of life.
-for (var i = 0; i < 10; i++) {
-    valley.turn();
-    console.log(valley.toString());
-}
+// for (var i = 0; i < 10; i++) {
+//   valley.turn();
+//   console.log(valley.toString());
+// }
+animateWorld(valley);

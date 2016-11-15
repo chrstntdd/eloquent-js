@@ -1,5 +1,5 @@
 import {Vector} from '../ch6/ch6-ex';
-import 
+import {Animated, window} from './animateworld.js'
 
 const directions = {
     'n':  new Vector( 0, 1),
@@ -350,7 +350,9 @@ var valley = new LifelikeWorld(
 
 
 //print 10 turns of life.
- for (var i = 0; i < 10; i++) {
-   valley.turn();
-   console.log(valley.toString());
- }
+// for (var i = 0; i < 10; i++) {
+//   valley.turn();
+//   console.log(valley.toString());
+// }
+
+animateWorld(valley);

@@ -1,5 +1,3 @@
-//Pulled from eloquentjavascript.net 
-
 // test: no
 
 (function() {
@@ -55,4 +53,5 @@
   window.animateWorld = function(world) { new Animated(world); };
 })();
 
-export {Animated};
+exports.Animated = Animated;
+exports.window = window;
