@@ -4,5 +4,8 @@
         "target": "es5",
         "removeComments": false,
         "noImplicitAny": true
+    },
+    "awesomeTypescriptLoaderOptions":{
+        /* ... */
     }
 }

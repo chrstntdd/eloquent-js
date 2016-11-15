@@ -1,0 +1,17 @@
+{
+  "name": "eloquent-js",
+  "version": "1.0.0",
+  "description": "end of chapter exercises from eloquent javascript",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/chrstntdd/eloquent-js.git",
+    "type": "git"
+  },
+  "author": "Christian Todd <ChristianTodd27@icloud.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "awesome-typescript-loader": "^2.2.4",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
