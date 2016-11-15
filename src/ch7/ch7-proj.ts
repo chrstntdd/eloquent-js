@@ -1,5 +1,4 @@
 import {Vector} from '../ch6/ch6-ex';
-import {Animated} from './animateworld'
 
 const directions = {
     'n':  new Vector( 0, 1),
@@ -16,13 +15,13 @@ const plan: string[] = ['############################',
                         '#      #    #      o      ##',
                         '#                          #',
                         '#          #####           #',
-                        '##         #~  #    ##     #',
+                        '##         #   #    ##     #',
                         '###           ##     #     #',
                         '#           ###      #     #',
                         '#   ####                   #',
                         '#   ##       o             #',
                         '# o  #         o       ### #',
-                        '#    #~                    #',
+                        '#    #                     #',
                         '############################'];
 
 var directionNames: string[] = 'n ne e se s sw w nw'.split(' ');
@@ -61,13 +60,6 @@ class Grid{
         }
     }
 }
-
-//var grid = new Grid(5,5);
-//console.log(grid.get(new Vector(1,1)));
-// → undefined
-//grid.set(new Vector(1, 1), 'X');
-//console.log(grid.get(new Vector(1, 1)));
-// → X
 
 function elementFromChar(legend: any, ch: string){
     if (ch == ' '){
@@ -212,12 +204,6 @@ class WallFlower{
     };
 }
 
-//initalize world.
-//var world = new World(plan, {'#': Wall,
-//                             'o': BouncingCritter,
-//                             '~': WallFlower});
-
-
 class LifelikeWorld extends World{
     map: any;
     legend: any;
@@ -287,17 +273,13 @@ class Plant {
     act(view: any) {
         if (this.energy > 15) {
             var space = view.find(' ');
-            if (space)
-                return {
-                    type: 'reproduce',
-                    direction: space
-                };
+            if (space){
+                return { type: 'reproduce', direction: space };
+            }
         }
-        if (this.energy < 20)
-            return {
-                type: 'grow',
-                direction: undefined
-            };
+        if (this.energy < 20){
+            return { type: 'grow',direction: undefined };
+        }
     }
 }
 
@@ -309,23 +291,14 @@ class PlantEater{
     act(view: any){
         let space = view.find(' ');
         if (this.energy > 60 && space){
-            return {
-                type: 'reproduce',
-                direction: space
-            };
+            return { type: 'reproduce', direction: space };
         }
         let plant = view.find('*');
         if(plant) {
-            return {
-                type: 'eat',
-                direction: plant
-            };
+            return { type: 'eat', direction: plant }
         }
         if(space){
-            return {
-                type: 'move',
-                direction: space
-            }
+            return { type: 'move',direction: space }
         }
     }
 }
@@ -347,12 +320,8 @@ var valley = new LifelikeWorld(
    'O': PlantEater,
    '*': Plant}
 );
-
-
-//print 10 turns of life.
-// for (var i = 0; i < 10; i++) {
-//   valley.turn();
-//   console.log(valley.toString());
-// }
-
 animateWorld(valley);
+
+//var world = new World(plan, {"#": Wall,
+//                             "o": BouncingCritter});
+//animateWorld(world);
