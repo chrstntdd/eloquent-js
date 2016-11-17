@@ -42,39 +42,33 @@ class Grid{
     isInside(vector: any){
         return vector.x >= 0 && vector.x < this.width &&
                vector.y >= 0 && vector.y < this.height;
-    }
+    };
     get(vector: any){
         return this.space[vector.x + this.width * vector.y];
-    }
+    };
     set(vector: any, value: any){
         this.space[vector.x + this.width * vector.y] = value;
-    }
+    };
     forEach(f: any, context: any) {
         for (var y = 0; y < this.height; y++) {
             for (var x = 0; x < this.width; x++) {
                 let value = this.space[x + y * this.width];
-                if (value != null) {
+                if (value != null)
                     f.call(context, value, new Vector(x, y));
-                }
             }
         }
-    }
+    };
 }
 
 function elementFromChar(legend: any, ch: string){
-    if (ch == ' '){
-        return null;
-    }
+    if (ch == ' ') return null;
     let element = new legend[ch]();
     element.originChar = ch;
     return element;
 }
 function charFromElement(element: any){
-    if (element == null){
-        return ' ';
-    } else {
-        return element.originChar;
-    }
+    if (element == null) return ' ';
+    else return element.originChar;
 }
 
 function Wall(){};
@@ -103,7 +97,7 @@ class World{
         this.map       = map.forEach(function (line, y) {
             for (var x = 0; x < line.length; x++)
                 grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
-        })
+        });
     };
     toString(){
         let output = '';
@@ -138,9 +132,7 @@ class World{
     private checkDestination(action: any, vector: any){
         if (directions.hasOwnProperty(action.direction)){
             let dest = vector.plus(directions[action.direction]);
-            if (this.grid.isInside(dest)){
-                return dest;
-            }
+            if (this.grid.isInside(dest)) return dest;
         }
     };
 }
@@ -154,26 +146,21 @@ class View {
     }
     look(dir: string){
         let target = this.vector.plus(directions[dir]);
-        if (this.world.grid.isInside(target)){
+        if (this.world.grid.isInside(target))
             return charFromElement(this.world.grid.get(target));
-        } else {
+          else 
             return '#';
-        }
     };
     findAll(ch: string){
         let found: string[] = [];
-        for (var dir in directions){
-            if (this.look(dir) == ch){
+        for (var dir in directions)
+            if (this.look(dir) == ch)
                 found.push(dir);
-            }
-            return found;
-        }
+        return found;
     };
     find(ch: string){
         var found = this.findAll(ch);
-        if (found.length == 0){
-            return null;
-        }
+        if (found.length == 0) return null;
         return randomElement(found);
     };
 }
@@ -191,14 +178,11 @@ class WallFlower{
 
     act(view: any){
         let start = this.dir;
-        if(view.look(dirPlus(this.dir, -3)) != ' '){
+        if(view.look(dirPlus(this.dir, -3)) != ' ')
             start = this.dir = dirPlus(this.dir, -2);
-        }
         while (view.look(this.dir) != ' '){
             this.dir = dirPlus(this.dir, 1);
-            if (this.dir == start){
-                break
-            }
+            if (this.dir == start) break;
         }
         return {type: 'move', direction: this.dir};
     };
@@ -214,15 +198,16 @@ class LifelikeWorld extends World{
     }
     letAct(critter: any, vector: any){
         let action = critter.act(new View(this, vector));
-        let handled = action && actionTypes[action.type].call(this, critter, vector, action);
+        let handled = action && 
+                      action.type in actionTypes &&
+                      actionTypes[action.type].call(this,critter,vector,action);
 
         if (!handled){
             critter.energy -= 0.2;
-            if(critter.energy <= 0){
+            if(critter.energy <= 0) 
                 this.grid.set(vector,null);
-            }
         }
-    }
+    };
 }
 
 let actionTypes = Object.create(null);
@@ -230,40 +215,37 @@ let actionTypes = Object.create(null);
 actionTypes.grow = function(critter: any){
     critter.energy += 0.5;
     return true;
-} 
+};
 
 actionTypes.move = function(critter: any, vector: any, action: any){
     let dest = this.checkDestination(action, vector);
-    if (dest == null || critter.energy <= 1 || this.grid.get(dest) != null){
+    if (dest == null || critter.energy <= 1 || this.grid.get(dest) != null)
         return false;
-    }
     critter.energy -= 1;
     this.grid.set(vector, null);
     this.grid.set(dest, critter);
     return true;
-}
+};
 
 actionTypes.eat = function(critter: any, vector: any, action: any){
     let dest = this.checkDestination(action, vector);
     let atDest = dest != null && this.grid.get(dest);
-    if(!atDest || atDest.energy == null){
+    if(!atDest || atDest.energy == null)
         return false;
-    }
     critter.energy += atDest.energy;
     this.grid.set(dest, null);
     return true;
-}
+};
 
 actionTypes.reproduce = function(critter: any, vector: any, action: any){
     let baby = elementFromChar(this.legend, critter.originChar);
     let dest = this.checkDestination(action, vector);
-    if (dest == null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null){
+    if (dest == null || critter.energy <= 2 * baby.energy || this.grid.get(dest) != null)
         return false;
-    }
     critter.energy -= 2 * baby.energy;
     this.grid.set(dest, baby);
     return true;
-}
+};
 
 class Plant {
     energy: number;
@@ -273,14 +255,12 @@ class Plant {
     act(view: any) {
         if (this.energy > 15) {
             var space = view.find(' ');
-            if (space){
+            if (space)
                 return { type: 'reproduce', direction: space };
-            }
         }
-        if (this.energy < 20){
+        if (this.energy < 20)
             return { type: 'grow',direction: undefined };
-        }
-    }
+    };
 }
 
 class PlantEater{
@@ -300,7 +280,7 @@ class PlantEater{
         if(space){
             return { type: 'move',direction: space }
         }
-    }
+    };
 }
 
 var valley = new LifelikeWorld(
