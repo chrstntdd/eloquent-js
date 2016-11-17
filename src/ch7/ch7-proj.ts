@@ -283,25 +283,63 @@ class PlantEater{
     };
 }
 
-var valley = new LifelikeWorld(
-  ['############################',
-   '#####                 ######',
-   '##   ***                **##',
-   '#   *##**         **  O  *##',
-   '#    ***     O    ##**    *#',
-   '#       O         ##***    #',
-   '#                 ##**     #',
-   '#   O       #*             #',
-   '#*          #**       O    #',
-   '#***        ##**    O    **#',
-   '##****     ###***       *###',
-   '############################'],
-  {'#': Wall,
-   'O': PlantEater,
-   '*': Plant}
-);
-animateWorld(valley);
+// var valley = new LifelikeWorld(
+//   ['############################',
+//    '#####                 ######',
+//    '##   ***                **##',
+//    '#   *##**         **  O  *##',
+//    '#    ***     O    ##**    *#',
+//    '#       O         ##***    #',
+//    '#                 ##**     #',
+//    '#   O       #*             #',
+//    '#*          #**       O    #',
+//    '#***        ##**    O    **#',
+//    '##****     ###***       *###',
+//    '############################'],
+//   {'#': Wall,
+//    'O': PlantEater,
+//    '*': Plant}
+// );
+// animateWorld(valley);
 
-//var world = new World(plan, {"#": Wall,
-//                             "o": BouncingCritter});
-//animateWorld(world);
+///////////////////////////////////////////////////////////////////////
+
+//Problem 1
+
+class SmartPlantEater{
+    energy: number;
+    dir:    string;
+    constructor(energy: number, dir: string){
+        this.energy = 20;
+        this.dir = randomElement(directionNames);
+    }
+    act(view: any){
+        let space:  any      = view.find(' ');
+        let plants: string[] = view.findAll('*');
+        if (this.energy > 95 && space) 
+            return { type: 'reproduce', direction: space};
+        if (plants.length > 1) 
+            return { type: 'eat', direction: randomElement(plants)};
+        if (view.look(this.dir) != ' ' && space)
+            this.dir = space;
+            return { type: 'move', direction: this.dir};
+    };
+}
+
+animateWorld(new LifelikeWorld(
+  ["############################",
+   "#####                 ######",
+   "##   ***                **##",
+   "#   *##**         **  O  *##",
+   "#    ***     O    ##**    *#",
+   "#       O         ##***    #",
+   "#                 ##**     #",
+   "#   O       #*             #",
+   "#*          #**       O    #",
+   "#***        ##**    O    **#",
+   "##****     ###***       *###",
+   "############################"],
+  {"#": Wall,
+   "O": SmartPlantEater,
+   "*": Plant}
+));
