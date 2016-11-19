@@ -342,11 +342,14 @@ var SmartPlantEater = (function () {
 //    '*': Plant}
 // ));
 //PROBLEM 2
+actionTypes.stay = function (critter, vector, action) {
+    return false;
+};
 var Tiger = (function () {
     function Tiger(energy, dir, memory) {
         this.energy = 90;
         this.dir = randomElement(directionNames);
-        this.memory = [];
+        this.memory = []; //holds count of number of prey around predator each turn.
     }
     Tiger.prototype.act = function (view) {
         var seenEachTurn = this.memory.reduce(function (a, b) { return a + b; }, 0) / this.memory.length;
@@ -355,8 +358,10 @@ var Tiger = (function () {
         this.memory.push(prey.length);
         if (this.memory.length > 5)
             this.memory.shift();
-        if (prey.length > 1)
+        if (prey.length && seenEachTurn > 0.33)
             return { type: 'eat', direction: randomElement(prey) };
+        if (seenEachTurn < 0.10)
+            return { type: 'stay', direction: undefined };
         if (this.energy > 300 && space)
             return { type: 'reproduce', direction: space };
         if (view.look(this.dir) != ' ' && space)

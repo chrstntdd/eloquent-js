@@ -144,21 +144,21 @@ class View {
         this.world  = world;
         this.vector = vector;
     }
-    look(dir: string){
+    look(dir: string): string{
         let target = this.vector.plus(directions[dir]);
         if (this.world.grid.isInside(target))
             return charFromElement(this.world.grid.get(target));
           else 
             return '#';
     };
-    findAll(ch: string){
+    findAll(ch: string): string[]{
         let found: string[] = [];
         for (var dir in directions)
             if (this.look(dir) == ch)
                 found.push(dir);
         return found;
     };
-    find(ch: string){
+    find(ch: string): string{
         var found = this.findAll(ch);
         if (found.length == 0) return null;
         return randomElement(found);
@@ -348,6 +348,10 @@ class SmartPlantEater{
 
 //PROBLEM 2
 
+actionTypes.stay = function(critter: any, vector: any, action: any){
+    return false;
+};
+
 
 class Tiger {
     energy: number;
@@ -356,7 +360,7 @@ class Tiger {
     constructor(energy: number, dir: string, memory: any[]) {
         this.energy = 90;
         this.dir    = randomElement(directionNames);
-        this.memory = [];
+        this.memory = []; //holds count of number of prey around predator each turn.
     }
     act(view: any) {
         let seenEachTurn: number   = this.memory.reduce((a, b) => a + b, 0) / this.memory.length;
@@ -365,8 +369,10 @@ class Tiger {
         this.memory.push(prey.length);
         if (this.memory.length > 5)
             this.memory.shift();
-        if (prey.length > 1)
+        if (prey.length && seenEachTurn > 0.33)
             return { type: 'eat', direction: randomElement(prey)};
+        if (seenEachTurn < 0.10)
+            return { type: 'stay', direction: undefined }
         if (this.energy > 300 && space)
             return { type: 'reproduce', direction: space };
         if (view.look(this.dir) != ' ' && space)
