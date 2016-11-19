@@ -324,17 +324,66 @@ var SmartPlantEater = (function () {
     ;
     return SmartPlantEater;
 }());
-animateWorld(new LifelikeWorld(["############################",
-    "#####                 ######",
-    "##   ***                **##",
-    "#   *##**         **  O  *##",
-    "#    ***     O    ##**    *#",
-    "#       O         ##***    #",
-    "#                 ##**     #",
-    "#   O       #*             #",
-    "#*          #**       O    #",
-    "#***        ##**    O    **#",
-    "##****     ###***       *###",
-    "############################"], { "#": Wall,
+// animateWorld(new LifelikeWorld(
+//   ["############################",
+//    "#####                 ######",
+//    "##   ***                **##",
+//    "#   *##**         **  O  *##",
+//    "#    ***     O    ##**    *#",
+//    "#       O         ##***    #",
+//    "#                 ##**     #",
+//    "#   O       #*             #",
+//    "#*          #**       O    #",
+//    "#***        ##**    O    **#",
+//    "##****     ###***       *###",
+//    "############################"],
+//   {"#": Wall,
+//    "O": SmartPlantEater,
+//    "*": Plant}
+// ));
+//PROBLEM 2
+var Tiger = (function () {
+    function Tiger(energy, dir, memory) {
+        this.energy = 90;
+        this.dir = randomElement(directionNames);
+        this.memory = [];
+    }
+    Tiger.prototype.act = function (view) {
+        var seenEachTurn = this.memory.reduce(function (a, b) { return a + b; }, 0) / this.memory.length;
+        var prey = view.findAll('O');
+        var space = view.find(' ');
+        this.memory.push(prey.length);
+        if (this.memory.length > 5)
+            this.memory.shift();
+        if (prey.length > 1)
+            return { type: 'eat', direction: randomElement(prey) };
+        if (this.energy > 300 && space)
+            return { type: 'reproduce', direction: space };
+        if (view.look(this.dir) != ' ' && space)
+            this.dir = space;
+        return { type: 'move', direction: this.dir };
+    };
+    ;
+    return Tiger;
+}());
+animateWorld(new LifelikeWorld(["####################################################",
+    "#                 ####         ****              ###",
+    "#   *  @  ##                 ########       OO    ##",
+    "#   *    ##        O O                 ****       *#",
+    "#       ##*                        ##########     *#",
+    "#      ##***  *         ****                     **#",
+    "#* **  #  *  ***      #########                  **#",
+    "#* **  #      *               #   *              **#",
+    "#     ##              #   O   #  ***          ######",
+    "#*            @       #       #   *        O  #    #",
+    "#*                    #  ######                 ** #",
+    "###          ****          ***                  ** #",
+    "#       O                        @         O       #",
+    "#   *     ##  ##  ##  ##               ###      *  #",
+    "#   **         #              *       #####  O     #",
+    "##  **  O   O  #  #    ***  ***        ###      ** #",
+    "###               #   *****                    ****#",
+    "####################################################"], { "#": Wall,
+    "@": Tiger,
     "O": SmartPlantEater,
     "*": Plant }));

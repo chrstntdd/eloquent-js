@@ -326,20 +326,76 @@ class SmartPlantEater{
     };
 }
 
+// animateWorld(new LifelikeWorld(
+//   ["############################",
+//    "#####                 ######",
+//    "##   ***                **##",
+//    "#   *##**         **  O  *##",
+//    "#    ***     O    ##**    *#",
+//    "#       O         ##***    #",
+//    "#                 ##**     #",
+//    "#   O       #*             #",
+//    "#*          #**       O    #",
+//    "#***        ##**    O    **#",
+//    "##****     ###***       *###",
+//    "############################"],
+//   {"#": Wall,
+//    "O": SmartPlantEater,
+//    "*": Plant}
+// ));
+
+
+
+//PROBLEM 2
+
+
+class Tiger {
+    energy: number;
+    dir:    string;
+    memory: any[];
+    constructor(energy: number, dir: string, memory: any[]) {
+        this.energy = 90;
+        this.dir    = randomElement(directionNames);
+        this.memory = [];
+    }
+    act(view: any) {
+        let seenEachTurn: number   = this.memory.reduce((a, b) => a + b, 0) / this.memory.length;
+        let prey:         string[] = view.findAll('O');
+        let space:        any      = view.find(' ');
+        this.memory.push(prey.length);
+        if (this.memory.length > 5)
+            this.memory.shift();
+        if (prey.length > 1)
+            return { type: 'eat', direction: randomElement(prey)};
+        if (this.energy > 300 && space)
+            return { type: 'reproduce', direction: space };
+        if (view.look(this.dir) != ' ' && space)
+            this.dir = space;
+            return { type: 'move', direction: this.dir };
+    };
+}
+
 animateWorld(new LifelikeWorld(
-  ["############################",
-   "#####                 ######",
-   "##   ***                **##",
-   "#   *##**         **  O  *##",
-   "#    ***     O    ##**    *#",
-   "#       O         ##***    #",
-   "#                 ##**     #",
-   "#   O       #*             #",
-   "#*          #**       O    #",
-   "#***        ##**    O    **#",
-   "##****     ###***       *###",
-   "############################"],
+  ["####################################################",
+   "#                 ####         ****              ###",
+   "#   *  @  ##                 ########       OO    ##",
+   "#   *    ##        O O                 ****       *#",
+   "#       ##*                        ##########     *#",
+   "#      ##***  *         ****                     **#",
+   "#* **  #  *  ***      #########                  **#",
+   "#* **  #      *               #   *              **#",
+   "#     ##              #   O   #  ***          ######",
+   "#*            @       #       #   *        O  #    #",
+   "#*                    #  ######                 ** #",
+   "###          ****          ***                  ** #",
+   "#       O                        @         O       #",
+   "#   *     ##  ##  ##  ##               ###      *  #",
+   "#   **         #              *       #####  O     #",
+   "##  **  O   O  #  #    ***  ***        ###      ** #",
+   "###               #   *****                    ****#",
+   "####################################################"],
   {"#": Wall,
-   "O": SmartPlantEater,
+   "@": Tiger,
+   "O": SmartPlantEater, // from previous exercise
    "*": Plant}
 ));
