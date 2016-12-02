@@ -10,7 +10,15 @@ function primitiveMultiply(a: number, b: number): number {
 }
 
 function reliableMultiply(a: number, b: number): number {
-  // Your code here.
+  while (true) {
+    try {
+      return primitiveMultiply(a, b);
+    } catch (error) {
+      if (!(error instanceof MultiplicatorUnitFailure)) {
+        throw error;
+      }
+    }
+  }
 }
 
 console.log(reliableMultiply(8, 8));

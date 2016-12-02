@@ -7,7 +7,16 @@ function primitiveMultiply(a, b) {
         throw new MultiplicatorUnitFailure();
 }
 function reliableMultiply(a, b) {
-    return a * b;
+    while (true) {
+        try {
+            return primitiveMultiply(a, b);
+        }
+        catch (error) {
+            if (!(error instanceof MultiplicatorUnitFailure)) {
+                throw error;
+            }
+        }
+    }
 }
 console.log(reliableMultiply(8, 8));
 // → 64 
