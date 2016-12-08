@@ -1,3 +1,4 @@
+//PROBLEM 1
 // Fill in the regular expressions
 
 verify(/car|cat/,
@@ -41,3 +42,10 @@ function verify(regexp, yes, no) {
       console.log("Unexpected match for '" + s + "'");
   });
 }
+
+//PROBLEM 2
+
+var text = "'I'm the cook,' he said, 'it's my job.'";
+// Change this call.
+console.log(text.replace(/(^|\W)'|'(\W|$)/g, '$1"$2'));
+// → "I'm the cook," he said, "it's my job."
