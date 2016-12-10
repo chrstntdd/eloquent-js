@@ -12,3 +12,5 @@ console.log(month.name(2));
 // → March
 console.log(month.number("November"));
 // → 10
+
+//PROBLEM 2 LOCATED IN problem2 DIRECTORY

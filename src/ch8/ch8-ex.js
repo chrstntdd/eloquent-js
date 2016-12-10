@@ -47,7 +47,7 @@ function withBoxUnlocked(body) {
         body();
     }
     catch (error) {
-        console.log('There was an error: ' + error);
+        console.log(error);
     }
     finally {
         box.lock();

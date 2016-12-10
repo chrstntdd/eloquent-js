@@ -1,8 +1,8 @@
 require('../../ch7/animateworld');
-require('./actiontypes');
-require('./direction');
-require('./elements');
-require('./wolrd');
+require('./ts/actiontypes');
+require('./ts/direction');
+require('./ts/elements');
+require('./ts/wolrd');
 
 animateWorld(new LifelikeWorld(['####################################################',
     '#                 ####         ****              ###',
