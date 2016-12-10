@@ -3,8 +3,8 @@
 let month = function () {
     let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return {
-        name:   (number) => { monthNames[number]; },
-        number: (name)   => { monthNames.indexOf(name); }
+        name:   number => { return monthNames[number]; },
+        number: name   => { return monthNames.indexOf(name); }
     }
 }();
 
