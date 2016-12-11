@@ -1,5 +1,5 @@
 # eloquent-js-exercises
-This repo exists to hold all files that contain my solutions to the end of chapter exercises as I read through [Eloquent Javascript by Marijn Haverbeke.](http://eloquentjavascript.net/).
+This repo exists to hold all files that contain my solutions to the end of chapter exercises as I read through [Eloquent Javascript by Marijn Haverbeke](http://eloquentjavascript.net/).
 
 Each chapter has it's own dedicated directory within the ```src``` folder.
 All chapter folders will contain the following:
@@ -10,8 +10,12 @@ All chapter folders will contain the following:
 
 This project also has a few dependencies used for setting up development within the browser. These can be installed by either:
 
-```npm install```
+```
+npm install
+```
 
 or
 
-```yarn install```
+```
+yarn install
+```
