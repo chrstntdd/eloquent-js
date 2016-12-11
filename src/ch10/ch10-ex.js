@@ -13,4 +13,5 @@ console.log(month.name(2));
 console.log(month.number("November"));
 // → 10
 
-//PROBLEM 2 LOCATED IN problem2 DIRECTORY
+// PROBLEM 2 LOCATED IN PROBLEM2 DIRECTORY
+// Code is modularized, but not in working order.

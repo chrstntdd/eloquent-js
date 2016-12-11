@@ -5,6 +5,9 @@
         "removeComments": false,
         "noImplicitAny": true
     },
+    "exclude": [
+        "node_modules"
+    ],
     "awesomeTypescriptLoaderOptions":{
         /* ... */
     }
