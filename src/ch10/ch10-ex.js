@@ -1,4 +1,4 @@
-//PROBLEM 1
+// PROBLEM 1
 
 let month = function () {
     let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -15,3 +15,12 @@ console.log(month.number("November"));
 
 // PROBLEM 2 LOCATED IN PROBLEM2 DIRECTORY
 // Code is modularized, but not in working order.
+
+// PROBLEM 3
+// FROM http://eloquentjavascript.net/10_modules.html
+/* 
+The trick is to add the exports object created for a module to require's cache before actually running the module. This means the module will not yet have had a chance to override module.exports, so we do not know whether it may want to export some other value. After loading, the cache object is overridden with module.exports, which may be a different value.
+
+But if in the course of loading the module, a second module is loaded that asks for the first module, its default exports object, which is likely still empty at this point, will be in the cache, and the second module will receive a reference to it. If it doesn’t try to do anything with the object until the first module has finished loading, things will work.
+
+*/
