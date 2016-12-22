@@ -162,3 +162,39 @@ function run() {
 //     "            define(count, +(count, 1)))),",
 //     "   print(total))");
 
+specialForms["fun"] = function (args, env) {
+    if (!args.length) {
+        throw new SyntaxError("Functions need a body");
+    }
+
+    function name(expr) {
+        if (expr.type !== "word") {
+            throw new SyntaxError("Arg names must be words");
+        }
+        return expr.name;
+    }
+    let argNames = args.slice(0, args.length - 1).map(name);
+    let body = args[args.length - 1];
+
+    return function () {
+        if (arguments.length !== argNames.length) {
+            throw new TypeError("Wrong number of arguments");
+        }
+        let localEnv = Object.create(env);
+        for (let i = 0; i < arguments.length; i++) {
+            localEnv[argNames[i]] = arguments[i];
+        }
+        return evaluate(body, localEnv);
+    };
+};
+
+// run("do(define(plusOne, fun(a, +(a, 1))),",
+//     "   print(plusOne(10)))");
+// → 11
+
+// run("do(define(pow, fun(base, exp,",
+//     "     if(==(exp, 0),",
+//     "        1,",
+//     "        *(base, pow(base, -(exp, 1)))))),",
+//     "   print(pow(2, 10)))");
+// → 1024
