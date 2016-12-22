@@ -30,9 +30,9 @@ function skipSpace(string) {
     return string.slice(first);
 }
 
-function ParseApply(expr, program){
+function parseApply(expr, program) {
     program = skipSpace(program);
-    if (program[0] !== "("){
+    if (program[0] !== "(") {
         return {
             expr: expr,
             rest: program
@@ -45,15 +45,25 @@ function ParseApply(expr, program){
         operator: expr,
         args: []
     };
-    while (program[0] !== ")"){
+    while (program[0] !== ")") {
         let arg = parseExpression(program);
         expr.args.push(arg.expr);
         program = skipSpace(arg.rest);
-        if (program[0] === ","){
+        if (program[0] === ",") {
             program = skipSpace(program.slice(1));
-        } else if (program[0] !== ")"){
+        } else if (program[0] !== ")") {
             throw new SyntaxError("Expected ',' or ')'");
         }
     }
     return parseApply(expr, program.slice(1));
 }
+
+function parse(program) {
+    let result = parseExpression(program);
+    if (skipSpace(result.rest).length > 0){
+        throw new SyntaxError("Unexpected text after program");
+    }
+    return result.expr;
+}
+
+console.log(parse("+(a,10)"));
