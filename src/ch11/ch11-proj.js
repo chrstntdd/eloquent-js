@@ -66,7 +66,7 @@ function parse(program) {
     return result.expr;
 }
 
-console.log(parse("+(a,10)"));
+// console.log(parse("+(a,10)"));
 
 function evaluate(expr, env) {
     switch (expr.type) {
@@ -131,3 +131,34 @@ specialForms["define"] = function (args, env) {
     env[args[0].name] = value;
     return value;
 };
+
+let topEnv = Object.create(null);
+
+topEnv["true"] = true;
+topEnv["false"] = false;
+
+// let prog = parse("if(true,false,true)");
+// console.log(evaluate(prog, topEnv));
+
+["+", "-", "*", "/", "==", "<", ">"].forEach(function (op) {
+    topEnv[op] = new Function("a, b", "return a " + op + " b;");
+});
+
+topEnv["print"] = function (value) {
+    console.log(value);
+    return value;
+};
+
+function run() {
+    let env = Object.create(topEnv);
+    let program = Array.prototype.slice.call(arguments, 0).join("\n");
+    return evaluate(parse(program), env);
+};
+
+// run("do(define(total, 0),",
+//     "   define(count, 1),",
+//     "   while(<(count, 11),",
+//     "         do(define(total, +(total, count)),",
+//     "            define(count, +(count, 1)))),",
+//     "   print(total))");
+
