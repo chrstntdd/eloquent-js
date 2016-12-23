@@ -224,3 +224,6 @@ run("do(define(sum, fun(array,",
 // → 6
 
 // REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+
+// PROBLEM 2
+// SEE ch11-proj.md

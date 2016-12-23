@@ -38,6 +38,10 @@ run("do(define(f, fun(a, fun(b, +(a, b)))),",
 
 Go back to the definition of the ```fun``` form and explain which mechanism causes this to work.
 
+## **ANSWER:**
+
+The function returned by ```fun``` closes over the ```env``` argument that is given to the enclosing function and subsequently creates the local environment once invoked. With this, the prototype of  the local environment will be the environment in which the function was created. This makes it possible to access variables from the function.
+
 # Problem 3
 ## Comments
 
